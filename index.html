@@ -103,14 +103,11 @@
             </header>
 
             <div class="toolbar" role="toolbar" aria-label="Provider management">
+                <input type="checkbox" id="master-check" onchange="toggleMasterCheck(this.checked)" aria-label="Select all" />
                 <button class="btn-accent" onclick="addProvider()" id="btn-add"></button>
                 <button class="btn-icon btn-danger-action" onclick="clearAll()" id="btn-clear" title="Clear all"></button>
-                <span class="toolbar-count" id="provider-count-label"></span>
-            </div>
-
-            <div class="selection-bar" id="selection-bar">
-                <span class="selection-count" id="selection-count"></span>
-                <div class="selection-actions">
+                <div class="selection-bar" id="selection-bar">
+                    <span class="selection-count" id="selection-count"></span>
                     <button class="btn-icon" onclick="duplicateSelected()" id="btn-dup-selected" title="Duplicate"></button>
                     <button class="btn-icon btn-danger-action" onclick="deleteSelected()" id="btn-del-selected" title="Delete"></button>
                     <span class="sel-sep" aria-hidden="true"></span>
@@ -118,10 +115,7 @@
                     <select id="bulk-format" onchange="bulkSetFormat(this.value)"></select>
                     <button class="btn-icon" onclick="bulkToggleThinking()" id="btn-toggle-thinking" title="Toggle thinking"></button>
                 </div>
-            </div>
-
-            <div class="list-header" id="list-header">
-                <input type="checkbox" id="master-check" onchange="toggleMasterCheck(this.checked)" aria-label="Select all" />
+                <span class="toolbar-count" id="provider-count-label"></span>
             </div>
         </div>
 
