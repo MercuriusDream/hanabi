@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko" dir="ltr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Hanabi Config Generator" />
+    <title>Hanabi Config Generator</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <svg class="bg-art" viewBox="0 0 1400 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+            <path id="sp" d="M0,-14 C5,-14 9,-8 9,-3 C9,3 5,7 0,2 C-5,7 -9,3 -9,-3 C-9,-8 -5,-14 0,-14Z" />
+            <g id="sakura">
+                <use href="#sp" />
+                <use href="#sp" transform="rotate(72)" />
+                <use href="#sp" transform="rotate(144)" />
+                <use href="#sp" transform="rotate(216)" />
+                <use href="#sp" transform="rotate(288)" />
+                <circle cx="0" cy="0" r="3" />
+                <circle cx="0" cy="-4" r="0.7" />
+                <circle cx="3.8" cy="-1.2" r="0.7" />
+                <circle cx="2.4" cy="3.2" r="0.7" />
+                <circle cx="-2.4" cy="3.2" r="0.7" />
+                <circle cx="-3.8" cy="-1.2" r="0.7" />
+            </g>
+            <g id="bud">
+                <ellipse cx="0" cy="-5" rx="3" ry="5" />
+                <ellipse cx="-3" cy="-3" rx="2.5" ry="4.5" transform="rotate(-20)" />
+                <ellipse cx="3" cy="-3" rx="2.5" ry="4.5" transform="rotate(20)" />
+            </g>
+            <path id="fp" d="M0,-6 C3,-6 5,-2 4,1 C3,4 1,6 0,4 C-1,6 -3,4 -4,1 C-5,-2 -3,-6 0,-6Z" />
+        </defs>
+        <g fill="currentColor" stroke="currentColor" stroke-width="0.2">
+            <g fill="none" stroke-width="2.5" stroke-linecap="round">
+                <path d="M1400,80 C1200,100 1050,60 950,120 C870,170 830,140 780,180" />
+                <path d="M950,120 C920,90 880,70 820,50" stroke-width="1.5" />
+                <path d="M830,140 C810,120 790,130 760,110" stroke-width="1" />
+                <path d="M780,180 C750,200 720,190 690,210" stroke-width="1.2" />
+            </g>
+            <g fill="none" stroke-width="2" stroke-linecap="round">
+                <path d="M0,750 C80,730 160,760 250,720 C320,690 370,710 420,680" />
+                <path d="M250,720 C230,690 260,660 280,640" stroke-width="1.2" />
+                <path d="M370,710 C390,730 420,720 450,740" stroke-width="0.8" />
+            </g>
+            <g fill="none" stroke-width="1" stroke-linecap="round">
+                <path d="M1400,550 C1300,530 1250,560 1200,540" />
+                <path d="M1250,560 C1230,580 1210,570 1190,590" stroke-width="0.7" />
+            </g>
+            <use href="#sakura" transform="translate(790,175) scale(2.2) rotate(10)" />
+            <use href="#sakura" transform="translate(840,145) scale(1.8) rotate(-5)" />
+            <use href="#sakura" transform="translate(920,115) scale(2.0) rotate(15)" />
+            <use href="#sakura" transform="translate(980,105) scale(1.5) rotate(-8)" />
+            <use href="#sakura" transform="translate(825,55) scale(1.3) rotate(20)" />
+            <use href="#sakura" transform="translate(770,115) scale(1.0) rotate(-15)" />
+            <use href="#sakura" transform="translate(700,205) scale(1.6) rotate(5)" />
+            <use href="#bud" transform="translate(755,100) scale(1.4) rotate(30)" />
+            <use href="#bud" transform="translate(690,220) scale(1.0) rotate(-20)" />
+            <use href="#sakura" transform="translate(260,715) scale(1.8) rotate(-10)" />
+            <use href="#sakura" transform="translate(330,695) scale(2.0) rotate(8)" />
+            <use href="#sakura" transform="translate(410,685) scale(1.5) rotate(-12)" />
+            <use href="#sakura" transform="translate(280,645) scale(1.2) rotate(25)" />
+            <use href="#sakura" transform="translate(445,735) scale(1.0) rotate(5)" />
+            <use href="#bud" transform="translate(200,730) scale(1.3) rotate(-30)" />
+            <use href="#sakura" transform="translate(1210,545) scale(1.4) rotate(10)" />
+            <use href="#sakura" transform="translate(1260,555) scale(1.1) rotate(-15)" />
+            <use href="#bud" transform="translate(1195,585) scale(1.0) rotate(20)" />
+            <use href="#fp" transform="translate(600,300) scale(1.8) rotate(45)" />
+            <use href="#fp" transform="translate(350,450) scale(1.4) rotate(120)" />
+            <use href="#fp" transform="translate(900,400) scale(1.6) rotate(80)" />
+            <use href="#fp" transform="translate(500,600) scale(1.2) rotate(200)" />
+            <use href="#fp" transform="translate(1100,300) scale(1.5) rotate(155)" />
+            <use href="#fp" transform="translate(150,200) scale(1.3) rotate(30)" />
+            <use href="#fp" transform="translate(700,800) scale(1.0) rotate(260)" />
+            <use href="#fp" transform="translate(1050,680) scale(1.7) rotate(100)" />
+            <use href="#fp" transform="translate(450,150) scale(1.1) rotate(310)" />
+            <use href="#fp" transform="translate(850,700) scale(0.9) rotate(170)" />
+            <use href="#fp" transform="translate(200,550) scale(1.5) rotate(65)" />
+            <use href="#fp" transform="translate(1300,450) scale(1.3) rotate(230)" />
+        </g>
+    </svg>
+
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <div class="layout">
+        <div class="top-bar">
+            <header role="banner">
+                <h1>
+                    <ruby style="color: var(--accent);">Hanabi<rt>花火</rt></ruby>
+                    <span class="thin">Config Generator</span>
+                </h1>
+                <div class="header-controls">
+                    <div class="lang-selector" role="group" aria-label="Language selection">
+                        <button class="lang-btn active" data-lang="ko" aria-pressed="true">한국어</button>
+                        <button class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+                        <button class="lang-btn" data-lang="ja" aria-pressed="false">日本語</button>
+                    </div>
+                    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            <div class="toolbar" role="toolbar" aria-label="Provider management">
+                <button class="btn-accent" onclick="addProvider()" id="btn-add"></button>
+                <button class="btn-icon btn-danger-action" onclick="clearAll()" id="btn-clear" title="Clear all"></button>
+                <span class="toolbar-count" id="provider-count-label"></span>
+            </div>
+
+            <div class="selection-bar" id="selection-bar">
+                <span class="selection-count" id="selection-count"></span>
+                <div class="selection-actions">
+                    <button class="btn-icon" onclick="duplicateSelected()" id="btn-dup-selected" title="Duplicate"></button>
+                    <button class="btn-icon btn-danger-action" onclick="deleteSelected()" id="btn-del-selected" title="Delete"></button>
+                    <span class="sel-sep" aria-hidden="true"></span>
+                    <select id="bulk-model" onchange="bulkSetModel(this.value)"></select>
+                    <select id="bulk-format" onchange="bulkSetFormat(this.value)"></select>
+                    <button class="btn-icon" onclick="bulkToggleThinking()" id="btn-toggle-thinking" title="Toggle thinking"></button>
+                </div>
+            </div>
+
+            <div class="list-header" id="list-header">
+                <input type="checkbox" id="master-check" onchange="toggleMasterCheck(this.checked)" aria-label="Select all" />
+            </div>
+        </div>
+
+        <main id="main-content">
+        <div class="providers-scroll">
+            <div id="providers-container" role="region" aria-label="Provider configurations"></div>
+        </div>
+
+        <div class="output-panel">
+            <div class="output-header">
+                <span class="output-title" data-i18n="generatedConfig">생성된 설정</span>
+            </div>
+            <div class="json-wrap">
+                <div class="json-toolbar">
+                    <button class="btn-json-action" onclick="importJSON()" id="btn-import" title="Import"></button>
+                    <button class="btn-json-action" onclick="copyToClipboard()" id="btn-copy" title="Copy"></button>
+                    <button class="btn-json-action" onclick="downloadJSON()" id="btn-download" title="Download"></button>
+                </div>
+                <textarea id="json-output" class="json-editor" spellcheck="false" aria-label="JSON output">[]</textarea>
+                <div id="json-highlight" class="json-highlight" tabindex="0" role="button" aria-label="Click to edit JSON"></div>
+            </div>
+        </div>
+        </main>
+    </div>
+
+    <div class="toast-container" id="toast-container" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
