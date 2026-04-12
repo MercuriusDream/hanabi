@@ -45,7 +45,6 @@ const IC = {
   logoOpencode: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6L2 10l4 4M14 6l4 4-4 4"/><rect x="8" y="8" width="4" height="6" rx="0.5" fill="currentColor" stroke="none"/></svg>',
   // Vertex AI - Cloud with neural connections
   logoVertex: '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M16 11a4 4 0 00-4-4 4.5 4.5 0 00-8 2 3 3 0 000 6h11a3 3 0 001-5.83z"/><circle cx="10" cy="12" r="1.5" fill="var(--bg)"/></svg>',
-  // DeepSeek - Deep/layered search
   logoDeepseek: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="5"/><path d="M13 13l4 4"/><path d="M9 6v6M6 9h6" stroke-width="1.2"/></svg>',
   // Llama - Stylized llama head
   logoLlama: '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><ellipse cx="10" cy="12" rx="5" ry="6"/><ellipse cx="6" cy="5" rx="1.5" ry="3"/><ellipse cx="14" cy="5" rx="1.5" ry="3"/><circle cx="8" cy="11" r="1" fill="var(--bg)"/><circle cx="12" cy="11" r="1" fill="var(--bg)"/></svg>',
@@ -150,6 +149,18 @@ const i18n = {
     hintPenalty: "0.0 ~ 2.0",
     hintTopK: "0 = 비활성화",
     hintMinP: "0.0 ~ 1.0",
+    close: "닫기",
+    // Confirmation dialogs
+    confirmDelete: "정말로 삭제할까요?",
+    confirmDeleteSelected: "선택한 항목을 삭제할까요?",
+    confirmClearAll: "모든 프로바이더를 삭제할까요?",
+    // Per-provider share
+    shareProvider: "공유",
+    shareProviderTitle: "프로바이더 공유",
+    includeApiKey: "API 키 포함 (주의: 크레딧 소모 가능)",
+    shareCodeLabel: "공유 코드",
+    copyCode: "복사",
+    codeCopied: "복사됨",
   },
   en: {
     addProvider: "Add Provider",
@@ -247,6 +258,18 @@ const i18n = {
     hintPenalty: "0.0 - 2.0",
     hintTopK: "0 = disabled",
     hintMinP: "0.0 - 1.0",
+    close: "Close",
+    // Confirmation dialogs
+    confirmDelete: "Delete this provider?",
+    confirmDeleteSelected: "Delete selected items?",
+    confirmClearAll: "Delete all providers?",
+    // Per-provider share
+    shareProvider: "Share",
+    shareProviderTitle: "Share Provider",
+    includeApiKey: "Include API Key (Warning: may burn credits)",
+    shareCodeLabel: "Share Code",
+    copyCode: "Copy",
+    codeCopied: "Copied",
   },
   ja: {
     addProvider: "プロバイダー追加",
@@ -344,180 +367,81 @@ const i18n = {
     hintPenalty: "0.0 ~ 2.0",
     hintTopK: "0 = 無効",
     hintMinP: "0.0 ~ 1.0",
+    close: "閉じる",
+    // Confirmation dialogs
+    confirmDelete: "このプロバイダーを削除しますか？",
+    confirmDeleteSelected: "選択した項目を削除しますか？",
+    confirmClearAll: "すべてのプロバイダーを削除しますか？",
+    // Per-provider share
+    shareProvider: "共有",
+    shareProviderTitle: "プロバイダー共有",
+    includeApiKey: "APIキーを含める（注意：クレジット消費の可能性）",
+    shareCodeLabel: "共有コード",
+    copyCode: "コピー",
+    codeCopied: "コピーしました",
   },
 };
 
 // ============================================================================
-// MODEL CATALOG - Comprehensive provider/model database (Updated April 2026)
+// MODEL CATALOG - Unified data from single source (Updated April 2026)
 // ============================================================================
-const MODEL_CATALOG = {
-  anthropic: {
-    name: "Anthropic",
-    color: "#d4a27a",
-    baseUrl: "https://api.anthropic.com",
-    models: [
-      { id: "claude-opus-4-6", name: "Claude Opus 4.6", tier: "flagship", context: 1000000, output: 300000, cot: true, recommended: true },
-      { id: "claude-opus-4-5", name: "Claude Opus 4.5", tier: "flagship", context: 200000, output: 128000, cot: true },
-      { id: "claude-sonnet-4-6", name: "Claude Sonnet 4.6", tier: "fast", context: 200000, output: 64000, cot: true, recommended: true },
-      { id: "claude-sonnet-4-5", name: "Claude Sonnet 4.5", tier: "fast", context: 200000, output: 64000, cot: true },
-      { id: "claude-sonnet-4", name: "Claude Sonnet 4", tier: "fast", context: 200000, output: 64000, cot: true },
-      { id: "claude-haiku-4-5", name: "Claude Haiku 4.5", tier: "efficient", context: 200000, output: 8192, cot: false, recommended: true },
-      { id: "claude-opus-4-1", name: "Claude Opus 4.1", tier: "legacy", context: 200000, output: 32000, cot: true },
-      { id: "claude-opus-4", name: "Claude Opus 4", tier: "legacy", context: 200000, output: 16000, cot: false },
-    ],
-  },
-  openai: {
-    name: "OpenAI",
-    color: "#74aa9c",
-    baseUrl: "https://api.openai.com",
-    models: [
-      { id: "gpt-5.4", name: "GPT-5.4", tier: "flagship", context: 1000000, output: 128000, cot: true, recommended: true },
-      { id: "gpt-5.4-pro", name: "GPT-5.4 Pro", tier: "flagship", context: 1000000, output: 128000, cot: true },
-      { id: "gpt-5.4-mini", name: "GPT-5.4 Mini", tier: "fast", context: 128000, output: 32000, cot: true, recommended: true },
-      { id: "gpt-5.4-nano", name: "GPT-5.4 Nano", tier: "efficient", context: 128000, output: 16000, cot: false },
-      { id: "gpt-5.3-chat", name: "GPT-5.3 Chat", tier: "fast", context: 128000, output: 32000, cot: true },
-      { id: "gpt-5.2", name: "GPT-5.2", tier: "fast", context: 128000, output: 32000, cot: true },
-      { id: "gpt-5.2-pro", name: "GPT-5.2 Pro", tier: "flagship", context: 128000, output: 64000, cot: true },
-      { id: "gpt-5.1", name: "GPT-5.1", tier: "fast", context: 128000, output: 32000, cot: true },
-      { id: "gpt-5.1-pro", name: "GPT-5.1 Pro", tier: "flagship", context: 128000, output: 64000, cot: true },
-      { id: "gpt-5", name: "GPT-5", tier: "fast", context: 128000, output: 16000, cot: false },
-      { id: "gpt-5-pro", name: "GPT-5 Pro", tier: "flagship", context: 128000, output: 32000, cot: true },
-      { id: "gpt-5-mini", name: "GPT-5 Mini", tier: "efficient", context: 128000, output: 8000, cot: false },
-      { id: "gpt-4.1", name: "GPT-4.1", tier: "legacy", context: 128000, output: 16000, cot: false },
-      { id: "gpt-4.1-mini", name: "GPT-4.1 Mini", tier: "legacy", context: 128000, output: 8000, cot: false },
-      { id: "gpt-4.1-nano", name: "GPT-4.1 Nano", tier: "legacy", context: 128000, output: 4000, cot: false },
-    ],
-  },
-  gemini: {
-    name: "Google Gemini",
-    color: "#8b9dc3",
-    baseUrl: "https://generativelanguage.googleapis.com",
-    models: [
-      { id: "gemini-3.1-pro", name: "Gemini 3.1 Pro", tier: "flagship", context: 2000000, output: 65536, cot: true, recommended: true },
-      { id: "gemini-3.1-flash-lite", name: "Gemini 3.1 Flash Lite", tier: "efficient", context: 1000000, output: 32768, cot: true, recommended: true },
-      { id: "gemini-3-flash", name: "Gemini 3 Flash", tier: "fast", context: 1000000, output: 65536, cot: true, recommended: true },
-      { id: "gemini-2.5-pro", name: "Gemini 2.5 Pro", tier: "flagship", context: 1000000, output: 65536, cot: true },
-      { id: "gemini-2.5-flash", name: "Gemini 2.5 Flash", tier: "fast", context: 1000000, output: 65536, cot: true },
-      { id: "gemma-4-31b-it", name: "Gemma 4 31B", tier: "fast", context: 256000, output: 8192, cot: true },
-      { id: "gemma-4-26b-a4b-it", name: "Gemma 4 26B-A4B", tier: "efficient", context: 256000, output: 8192, cot: true },
-    ],
-  },
-  xai: {
-    name: "xAI",
-    color: "#1a1a1a",
-    baseUrl: "https://api.x.ai",
-    models: [
-      { id: "grok-4.20", name: "Grok 4.20", tier: "flagship", context: 2000000, output: 128000, cot: true, recommended: true },
-      { id: "grok-4.20-multi-agent", name: "Grok 4.20 Multi Agent", tier: "flagship", context: 2000000, output: 128000, cot: true },
-      { id: "grok-4.1", name: "Grok 4.1", tier: "fast", context: 128000, output: 32000, cot: true, recommended: true },
-      { id: "grok-4.1-fast", name: "Grok 4.1 Fast", tier: "efficient", context: 128000, output: 16000, cot: false },
-      { id: "grok-4", name: "Grok 4", tier: "fast", context: 128000, output: 32000, cot: true },
-      { id: "grok-4-fast", name: "Grok 4 Fast", tier: "efficient", context: 128000, output: 16000, cot: false },
-    ],
-  },
-  deepseek: {
-    name: "DeepSeek",
-    color: "#0066ff",
-    baseUrl: "https://api.deepseek.com",
-    models: [
-      { id: "deepseek-v3.2-speciale", name: "DeepSeek V3.2 Speciale", tier: "flagship", context: 164000, output: 32000, cot: true, recommended: true },
-      { id: "deepseek-v3.2", name: "DeepSeek V3.2", tier: "flagship", context: 164000, output: 32000, cot: true, recommended: true },
-      { id: "deepseek-v3.1", name: "DeepSeek V3.1", tier: "fast", context: 128000, output: 16000, cot: true },
-      { id: "deepseek-v3", name: "DeepSeek V3", tier: "fast", context: 66000, output: 8000, cot: false },
-      { id: "deepseek-r1-0528", name: "DeepSeek R1-0528", tier: "flagship", context: 128000, output: 32000, cot: true, recommended: true },
-      { id: "deepseek-r1", name: "DeepSeek R1", tier: "flagship", context: 64000, output: 16000, cot: true },
-    ],
-  },
-  moonshot: {
-    name: "MoonshotAI",
-    color: "#6366f1",
-    baseUrl: "https://api.moonshot.ai",
-    models: [
-      { id: "kimi-k2.5", name: "KIMI K2.5", tier: "flagship", context: 256000, output: 32000, cot: true, recommended: true },
-      { id: "kimi-k2.5-thinking", name: "KIMI K2.5 Thinking", tier: "flagship", context: 256000, output: 32000, cot: true },
-      { id: "kimi-k2", name: "KIMI K2", tier: "fast", context: 128000, output: 16000, cot: true },
-      { id: "kimi-k2-thinking", name: "KIMI K2 Thinking", tier: "fast", context: 128000, output: 16000, cot: true },
-    ],
-  },
-  minimax: {
-    name: "MiniMax",
-    color: "#ff6b35",
-    baseUrl: "https://api.minimax.io",
-    models: [
-      { id: "minimax-m2.7", name: "MiniMax M2.7", tier: "flagship", context: 205000, output: 32000, cot: true, recommended: true },
-      { id: "minimax-m2.5", name: "MiniMax M2.5", tier: "fast", context: 200000, output: 16000, cot: true, recommended: true },
-      { id: "minimax-m2.1", name: "MiniMax M2.1", tier: "fast", context: 200000, output: 16000, cot: true },
-    ],
-  },
-  zhipu: {
-    name: "ZhipuAI",
-    color: "#1e40af",
-    baseUrl: "https://open.bigmodel.cn/api/paas",
-    models: [
-      { id: "glm-5.1", name: "GLM-5.1", tier: "flagship", context: 200000, output: 131072, cot: true, recommended: true },
-      { id: "glm-5", name: "GLM-5", tier: "flagship", context: 200000, output: 131072, cot: true },
-      { id: "glm-5v-turbo", name: "GLM-5V Turbo", tier: "fast", context: 128000, output: 16000, cot: false },
-      { id: "glm-4.7", name: "GLM-4.7", tier: "fast", context: 128000, output: 16000, cot: true, recommended: true },
-      { id: "glm-4.7-flash", name: "GLM-4.7 Flash", tier: "efficient", context: 128000, output: 8000, cot: false },
-      { id: "glm-4.6", name: "GLM-4.6", tier: "fast", context: 128000, output: 8000, cot: false },
-    ],
-  },
-  fireworks: {
-    name: "Fireworks",
-    color: "#e07850",
-    baseUrl: "https://api.fireworks.ai/inference",
-    models: [
-      { id: "accounts/fireworks/routers/kimi-k2p5-turbo", name: "KIMI K2.5 Turbo", tier: "router", context: 128000, output: 16000, cot: true, recommended: true },
-      { id: "accounts/fireworks/routers/deepseek-r1", name: "DeepSeek R1", tier: "router", context: 64000, output: 16000, cot: true, recommended: true },
-      { id: "accounts/fireworks/routers/deepseek-v3", name: "DeepSeek V3", tier: "router", context: 64000, output: 8000, cot: false },
-      { id: "accounts/fireworks/routers/glm-5-fast", name: "GLM-5 Fast", tier: "router", context: 128000, output: 16000, cot: true },
-      { id: "accounts/fireworks/models/llama-v3p1-405b-instruct", name: "Llama 3.1 405B", tier: "flagship", context: 128000, output: 16000, cot: false },
-      { id: "accounts/fireworks/models/qwen3-coder-480b", name: "Qwen3 Coder 480B", tier: "flagship", context: 262000, output: 32000, cot: false },
-    ],
-  },
-  openrouter: {
-    name: "OpenRouter",
-    color: "#6366f1",
-    baseUrl: "https://openrouter.ai/api",
-    models: [
-      { id: "anthropic/claude-opus-4.6", name: "Claude Opus 4.6", tier: "flagship", context: 1000000, output: 128000, cot: true, recommended: true },
-      { id: "anthropic/claude-sonnet-4.6", name: "Claude Sonnet 4.6", tier: "fast", context: 200000, output: 64000, cot: true, recommended: true },
-      { id: "openai/gpt-5.4", name: "GPT-5.4", tier: "flagship", context: 1000000, output: 128000, cot: true },
-      { id: "google/gemini-3.1-pro", name: "Gemini 3.1 Pro", tier: "flagship", context: 2000000, output: 65536, cot: true },
-      { id: "x-ai/grok-4.20", name: "Grok 4.20", tier: "flagship", context: 2000000, output: 128000, cot: true },
-      { id: "deepseek/deepseek-v3.2", name: "DeepSeek V3.2", tier: "fast", context: 164000, output: 32000, cot: true },
-      { id: "deepseek/deepseek-r1", name: "DeepSeek R1", tier: "flagship", context: 64000, output: 16000, cot: true },
-      { id: "google/gemma-4-31b-it", name: "Gemma 4 31B", tier: "fast", context: 256000, output: 8192, cot: true },
-      { id: "qwen/qwen3-coder-480b", name: "Qwen3 Coder 480B", tier: "flagship", context: 262000, output: 32000, cot: false, recommended: true },
-      { id: "openrouter/free", name: "Free Router", tier: "efficient", context: 128000, output: 8000, cot: false },
-    ],
-  },
-  vercel: {
-    name: "Vercel AI",
-    color: "#000000",
-    baseUrl: "https://api.vercel.ai",
-    models: [
-      { id: "anthropic/claude-opus-4.6", name: "Claude Opus 4.6", tier: "flagship", context: 1000000, output: 128000, cot: true, recommended: true },
-      { id: "anthropic/claude-sonnet-4.6", name: "Claude Sonnet 4.6", tier: "fast", context: 200000, output: 64000, cot: true },
-      { id: "openai/gpt-5.4", name: "GPT-5.4", tier: "flagship", context: 1000000, output: 128000, cot: true },
-      { id: "google/gemini-3.1-pro", name: "Gemini 3.1 Pro", tier: "flagship", context: 2000000, output: 65536, cot: true },
-      { id: "xai/grok-4.20", name: "Grok 4.20", tier: "flagship", context: 2000000, output: 128000, cot: true, recommended: true },
-      { id: "xai/grok-4.1", name: "Grok 4.1", tier: "fast", context: 128000, output: 32000, cot: true },
-      { id: "deepseek/deepseek-r1", name: "DeepSeek R1", tier: "flagship", context: 64000, output: 16000, cot: true },
-    ],
-  },
-  vertex: {
-    name: "Vertex AI",
-    color: "#4285f4",
-    baseUrl: "https://us-central1-aiplatform.googleapis.com",
-    models: [
-      { id: "gemini-3.1-pro", name: "Gemini 3.1 Pro", tier: "flagship", context: 2000000, output: 65536, cot: true, recommended: true },
-      { id: "gemini-3-flash", name: "Gemini 3 Flash", tier: "fast", context: 1000000, output: 65536, cot: true, recommended: true },
-      { id: "gemini-2.5-pro", name: "Gemini 2.5 Pro", tier: "flagship", context: 1000000, output: 65536, cot: true },
-      { id: "gemini-2.5-flash", name: "Gemini 2.5 Flash", tier: "fast", context: 1000000, output: 65536, cot: true },
-      { id: "claude-sonnet-4-6@latest", name: "Claude Sonnet 4.6", tier: "fast", context: 200000, output: 64000, cot: true },
-      { id: "claude-opus-4-5@latest", name: "Claude Opus 4.5", tier: "flagship", context: 200000, output: 128000, cot: true },
-    ],
+let MODEL_CATALOG = {};
+let PRESET_CATEGORIES = {};
+let PRESETS = [];
+
+// Fallback inline data (used if JSON fetch fails)
+const FALLBACK_DATA = {
+  providers: {
+    anthropic: {
+      name: "Anthropic",
+      shortName: "Claude",
+      color: "#d4a27a",
+      baseUrl: "https://api.anthropic.com",
+      modelsApi: "/v1/models",
+      models: [
+        { id: "claude-opus-4-6", name: "Claude Opus 4.6", tier: "flagship", context: 1000000, output: 128000, cot: true, recommended: true },
+        { id: "claude-sonnet-4-6", name: "Claude Sonnet 4.6", tier: "fast", context: 1000000, output: 64000, cot: true, recommended: true },
+        { id: "claude-haiku-4-5", name: "Claude Haiku 4.5", tier: "efficient", context: 200000, output: 8192, cot: false, recommended: true },
+      ],
+      presets: [
+        { id: "anthropic-custom", custom: true, name: { ko: "Anthropic 커스텀", en: "Anthropic Custom", ja: "Anthropicカスタム" }, desc: { ko: "직접 모델 ID 입력", en: "Enter custom model ID", ja: "カスタムモデルID入力" }, model: "", cot: false, context: "-" },
+        { id: "claude-opus-46", name: { ko: "Claude Opus 4.6", en: "Claude Opus 4.6", ja: "Claude Opus 4.6" }, desc: { ko: "최고 성능 + 1M 컨텍스트 + CoT", en: "Best performance + 1M context + CoT", ja: "最高性能 + 1Mコンテキスト + CoT" }, model: "claude-opus-4-6", cot: true, context: "1M", config: { thinking_budget: "32000" } },
+        { id: "claude-sonnet-46", name: { ko: "Claude Sonnet 4.6", en: "Claude Sonnet 4.6", ja: "Claude Sonnet 4.6" }, desc: { ko: "균형 잡힌 성능 + CoT", en: "Balanced performance + CoT", ja: "バランスの取れた性能 + CoT" }, model: "claude-sonnet-4-6", cot: true, context: "1M", config: { thinking_budget: "16384" } },
+        { id: "claude-haiku-45", name: { ko: "Claude Haiku 4.5", en: "Claude Haiku 4.5", ja: "Claude Haiku 4.5" }, desc: { ko: "최저 비용, 초고속", en: "Lowest cost, ultra-fast", ja: "最低コスト、超高速" }, model: "claude-haiku-4-5", cot: false, context: "200K" },
+      ],
+    },
+    openai: {
+      name: "OpenAI",
+      shortName: "OpenAI",
+      color: "#74aa9c",
+      baseUrl: "https://api.openai.com",
+      modelsApi: "/v1/models",
+      models: [
+        { id: "gpt-5.4", name: "GPT-5.4", tier: "flagship", context: 1000000, output: 128000, cot: true, recommended: true },
+        { id: "o4-mini", name: "o4-mini", tier: "fast", context: 200000, output: 100000, cot: true, recommended: true },
+      ],
+      presets: [
+        { id: "openai-custom", custom: true, name: { ko: "OpenAI 커스텀", en: "OpenAI Custom", ja: "OpenAIカスタム" }, desc: { ko: "직접 모델 ID 입력", en: "Enter custom model ID", ja: "カスタムモデルID入力" }, model: "", cot: false, context: "-" },
+        { id: "gpt-54", name: { ko: "GPT-5.4", en: "GPT-5.4", ja: "GPT-5.4" }, desc: { ko: "최신 플래그십, 1M 컨텍스트", en: "Latest flagship, 1M context", ja: "最新フラッグシップ、1Mコンテキスト" }, model: "gpt-5.4", cot: true, context: "1M", config: { thinking_budget: "32000" } },
+        { id: "o4-mini", name: { ko: "o4-mini", en: "o4-mini", ja: "o4-mini" }, desc: { ko: "추론 특화, 100K 출력", en: "Reasoning specialist, 100K output", ja: "推論特化、100K出力" }, model: "o4-mini", cot: true, context: "200K", config: { thinking_budget: "32000" } },
+      ],
+    },
+    gemini: {
+      name: "Google Gemini",
+      shortName: "Gemini",
+      color: "#8b9dc3",
+      baseUrl: "https://generativelanguage.googleapis.com",
+      modelsApi: "/v1beta/models",
+      models: [
+        { id: "gemini-3.1-pro", name: "Gemini 3.1 Pro", tier: "flagship", context: 2000000, output: 65536, cot: true, recommended: true },
+        { id: "gemini-3-flash", name: "Gemini 3 Flash", tier: "fast", context: 1000000, output: 65536, cot: true, recommended: true },
+      ],
+      presets: [
+        { id: "gemini-custom", custom: true, name: { ko: "Gemini 커스텀", en: "Gemini Custom", ja: "Geminiカスタム" }, desc: { ko: "직접 모델 ID 입력", en: "Enter custom model ID", ja: "カスタムモデルID入力" }, model: "", cot: false, context: "-" },
+        { id: "gemini-31-pro", name: { ko: "Gemini 3.1 Pro", en: "Gemini 3.1 Pro", ja: "Gemini 3.1 Pro" }, desc: { ko: "최대 2M 컨텍스트 + CoT", en: "Up to 2M context + CoT", ja: "最大2Mコンテキスト + CoT" }, model: "gemini-3.1-pro", cot: true, context: "2M", config: { thinking_budget: "16384" } },
+        { id: "gemini-3-flash", name: { ko: "Gemini 3 Flash", en: "Gemini 3 Flash", ja: "Gemini 3 Flash" }, desc: { ko: "Pro급 추론 + Flash 속도", en: "Pro-grade reasoning + Flash speed", ja: "Pro級推論 + Flash速度" }, model: "gemini-3-flash", cot: true, context: "1M", config: { thinking_budget: "8192", thinking_style: "minimal" } },
+      ],
+    },
   },
 };
 
@@ -531,627 +455,257 @@ const FORMAT_PROVIDER_MAP = {
 const FORMAT_OPTIONS = ["anthropic", "openai", "gemini"];
 
 // ============================================================================
-// PRESETS - One-click configurations with detailed metadata
+// DATA LOADING - Fetch unified data from single JSON file
 // ============================================================================
-const PRESET_CATEGORIES = {
-  anthropic: { name: "Claude", color: "#d4a27a" },
-  openai: { name: "GPT", color: "#74aa9c" },
-  gemini: { name: "Gemini", color: "#8b9dc3" },
-  xai: { name: "Grok", color: "#1a1a1a" },
-  deepseek: { name: "DeepSeek", color: "#0066ff" },
-  moonshot: { name: "KIMI", color: "#6366f1" },
-  minimax: { name: "MiniMax", color: "#ff6b35" },
-  zhipu: { name: "GLM", color: "#1e40af" },
-  fireworks: { name: "Fireworks", color: "#e07850" },
-  openrouter: { name: "OpenRouter", color: "#6366f1" },
-  vercel: { name: "Vercel", color: "var(--text)" },
-  vertex: { name: "Vertex", color: "#4285f4" },
-};
+async function loadDataFromJSON() {
+  try {
+    const response = await fetch("data.json");
+    if (response.ok) {
+      const data = await response.json();
+      const providers = data.providers || FALLBACK_DATA.providers;
 
-const PRESETS = [
-  // === ANTHROPIC (Direct) ===
-  {
-    id: "claude-opus-46",
-    category: "anthropic",
-    name: { ko: "Claude Opus 4.6", en: "Claude Opus 4.6", ja: "Claude Opus 4.6" },
-    desc: { ko: "최고 성능 + 1M 컨텍스트 + CoT", en: "Best performance + 1M context + CoT", ja: "最高性能 + 1Mコンテキスト + CoT" },
-    model: "claude-opus-4-6",
-    cot: true,
-    context: "1M",
-    config: {
-      provider_name: "Claude Opus 4.6",
-      model: "claude-opus-4-6",
-      api_format: "anthropic",
-      base_url: "https://api.anthropic.com",
-      enable_thinking: "true",
-      thinking_budget: "32000",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "claude-sonnet-46",
-    category: "anthropic",
-    name: { ko: "Claude Sonnet 4.6", en: "Claude Sonnet 4.6", ja: "Claude Sonnet 4.6" },
-    desc: { ko: "균형 잡힌 성능 + CoT", en: "Balanced performance + CoT", ja: "バランスの取れた性能 + CoT" },
-    model: "claude-sonnet-4-6",
-    cot: true,
-    context: "200K",
-    config: {
-      provider_name: "Claude Sonnet 4.6",
-      model: "claude-sonnet-4-6",
-      api_format: "anthropic",
-      base_url: "https://api.anthropic.com",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "claude-haiku-45",
-    category: "anthropic",
-    name: { ko: "Claude Haiku 4.5", en: "Claude Haiku 4.5", ja: "Claude Haiku 4.5" },
-    desc: { ko: "최저 비용, 초고속", en: "Lowest cost, ultra-fast", ja: "最低コスト、超高速" },
-    model: "claude-haiku-4-5",
-    cot: false,
-    context: "200K",
-    config: {
-      provider_name: "Claude Haiku 4.5",
-      model: "claude-haiku-4-5",
-      api_format: "anthropic",
-      base_url: "https://api.anthropic.com",
-      enable_thinking: "false",
-      show_thinking_output: "false",
-    },
-  },
+      // Build MODEL_CATALOG from unified structure
+      MODEL_CATALOG = {};
+      PRESET_CATEGORIES = {};
+      PRESETS = [];
 
-  // === OPENAI (Direct) ===
-  {
-    id: "gpt-54",
-    category: "openai",
-    name: { ko: "GPT-5.4", en: "GPT-5.4", ja: "GPT-5.4" },
-    desc: { ko: "최신 플래그십, 1M 컨텍스트", en: "Latest flagship, 1M context", ja: "最新フラッグシップ、1Mコンテキスト" },
-    model: "gpt-5.4",
-    cot: true,
-    context: "1M",
-    config: {
-      provider_name: "GPT-5.4",
-      model: "gpt-5.4",
-      api_format: "openai",
-      base_url: "https://api.openai.com",
-      enable_thinking: "true",
-      thinking_budget: "32000",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "gpt-54-mini",
-    category: "openai",
-    name: { ko: "GPT-5.4 Mini", en: "GPT-5.4 Mini", ja: "GPT-5.4 Mini" },
-    desc: { ko: "고속 + 저비용", en: "Fast + low cost", ja: "高速 + 低コスト" },
-    model: "gpt-5.4-mini",
-    cot: true,
-    context: "128K",
-    config: {
-      provider_name: "GPT-5.4 Mini",
-      model: "gpt-5.4-mini",
-      api_format: "openai",
-      base_url: "https://api.openai.com",
-      enable_thinking: "true",
-      thinking_budget: "8192",
-      show_thinking_output: "true",
-      thinking_style: "minimal",
-    },
-  },
+      for (const [key, prov] of Object.entries(providers)) {
+        // Build model catalog
+        MODEL_CATALOG[key] = {
+          name: prov.name,
+          color: prov.color,
+          baseUrl: prov.baseUrl,
+          modelsApi: prov.modelsApi,
+          models: prov.models || [],
+        };
 
-  // === GEMINI (Direct) ===
-  {
-    id: "gemini-31-pro",
-    category: "gemini",
-    name: { ko: "Gemini 3.1 Pro", en: "Gemini 3.1 Pro", ja: "Gemini 3.1 Pro" },
-    desc: { ko: "최대 2M 컨텍스트 + CoT", en: "Up to 2M context + CoT", ja: "最大2Mコンテキスト + CoT" },
-    model: "gemini-3.1-pro",
-    cot: true,
-    context: "2M",
-    config: {
-      provider_name: "Gemini 3.1 Pro",
-      model: "gemini-3.1-pro",
-      api_format: "gemini",
-      base_url: "https://generativelanguage.googleapis.com",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "gemini-3-flash",
-    category: "gemini",
-    name: { ko: "Gemini 3 Flash", en: "Gemini 3 Flash", ja: "Gemini 3 Flash" },
-    desc: { ko: "Pro급 추론 + Flash 속도", en: "Pro-grade reasoning + Flash speed", ja: "Pro級推論 + Flash速度" },
-    model: "gemini-3-flash",
-    cot: true,
-    context: "1M",
-    config: {
-      provider_name: "Gemini 3 Flash",
-      model: "gemini-3-flash",
-      api_format: "gemini",
-      base_url: "https://generativelanguage.googleapis.com",
-      enable_thinking: "true",
-      thinking_budget: "8192",
-      show_thinking_output: "true",
-      thinking_style: "minimal",
-    },
-  },
-  {
-    id: "gemini-31-flash-lite",
-    category: "gemini",
-    name: { ko: "Gemini 3.1 Flash Lite", en: "Gemini 3.1 Flash Lite", ja: "Gemini 3.1 Flash Lite" },
-    desc: { ko: "최저가 + 최고속", en: "Lowest cost + fastest", ja: "最低価格 + 最高速" },
-    model: "gemini-3.1-flash-lite",
-    cot: true,
-    context: "1M",
-    config: {
-      provider_name: "Gemini 3.1 Flash Lite",
-      model: "gemini-3.1-flash-lite",
-      api_format: "gemini",
-      base_url: "https://generativelanguage.googleapis.com",
-      enable_thinking: "true",
-      thinking_budget: "8192",
-      show_thinking_output: "true",
-      thinking_style: "minimal",
-    },
-  },
+        // Build preset categories
+        PRESET_CATEGORIES[key] = {
+          name: prov.shortName || prov.name,
+          color: prov.color,
+        };
 
-  // === XAI GROK (Direct) ===
-  {
-    id: "grok-420",
-    category: "xai",
-    name: { ko: "Grok 4.20", en: "Grok 4.20", ja: "Grok 4.20" },
-    desc: { ko: "2M 컨텍스트 + 에이전트 툴콜", en: "2M context + agent tool calls", ja: "2Mコンテキスト + エージェントツールコール" },
-    model: "grok-4.20",
-    cot: true,
-    context: "2M",
-    config: {
-      provider_name: "Grok 4.20",
-      model: "grok-4.20",
-      api_format: "openai",
-      base_url: "https://api.x.ai",
-      enable_thinking: "true",
-      thinking_budget: "32000",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "grok-41",
-    category: "xai",
-    name: { ko: "Grok 4.1", en: "Grok 4.1", ja: "Grok 4.1" },
-    desc: { ko: "창의적 + 협력적 상호작용", en: "Creative + collaborative interactions", ja: "クリエイティブ + 協力的インタラクション" },
-    model: "grok-4.1",
-    cot: true,
-    context: "128K",
-    config: {
-      provider_name: "Grok 4.1",
-      model: "grok-4.1",
-      api_format: "openai",
-      base_url: "https://api.x.ai",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "grok-41-fast",
-    category: "xai",
-    name: { ko: "Grok 4.1 Fast", en: "Grok 4.1 Fast", ja: "Grok 4.1 Fast" },
-    desc: { ko: "저지연 응답", en: "Low-latency responses", ja: "低レイテンシ応答" },
-    model: "grok-4.1-fast",
-    cot: false,
-    context: "128K",
-    config: {
-      provider_name: "Grok 4.1 Fast",
-      model: "grok-4.1-fast",
-      api_format: "openai",
-      base_url: "https://api.x.ai",
-      enable_thinking: "false",
-      show_thinking_output: "false",
-    },
-  },
+        // Build presets with defaults
+        if (prov.presets) {
+          for (const preset of prov.presets) {
+            const defaultConfig = {
+              provider_name: preset.custom ? (prov.shortName || prov.name) + " Custom" : preset.name?.en || preset.name,
+              model: preset.model,
+              api_format: preset.api_format || "openai",
+              base_url: prov.baseUrl,
+              enable_thinking: preset.cot ? "true" : "false",
+              show_thinking_output: preset.cot ? "true" : "false",
+              thinking_style: "default",
+            };
 
-  // === DEEPSEEK (Direct) ===
-  {
-    id: "deepseek-v32",
-    category: "deepseek",
-    name: { ko: "DeepSeek V3.2", en: "DeepSeek V3.2", ja: "DeepSeek V3.2" },
-    desc: { ko: "164K 컨텍스트 + 통합 추론", en: "164K context + integrated reasoning", ja: "164Kコンテキスト + 統合推論" },
-    model: "deepseek-v3.2",
-    cot: true,
-    context: "164K",
-    config: {
-      provider_name: "DeepSeek V3.2",
-      model: "deepseek-v3.2",
-      api_format: "openai",
-      base_url: "https://api.deepseek.com",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "deepseek-r1-0528",
-    category: "deepseek",
-    name: { ko: "DeepSeek R1-0528", en: "DeepSeek R1-0528", ja: "DeepSeek R1-0528" },
-    desc: { ko: "최신 추론 모델", en: "Latest reasoning model", ja: "最新推論モデル" },
-    model: "deepseek-r1-0528",
-    cot: true,
-    context: "128K",
-    config: {
-      provider_name: "DeepSeek R1",
-      model: "deepseek-r1-0528",
-      api_format: "openai",
-      base_url: "https://api.deepseek.com",
-      enable_thinking: "true",
-      thinking_display: "true",
-      show_thinking_output: "true",
-      thinking_style: "raw",
-    },
-  },
+            PRESETS.push({
+              id: preset.id,
+              category: key,
+              name: preset.name,
+              desc: preset.desc,
+              model: preset.model,
+              cot: preset.cot,
+              context: preset.context,
+              custom: preset.custom || false,
+              config: { ...defaultConfig, ...(preset.config || {}) },
+            });
+          }
+        }
+      }
+    } else {
+      console.warn("Failed to load data.json, using fallback");
+      loadFallbackData();
+    }
+  } catch (err) {
+    console.warn("Error loading data.json, using fallback:", err);
+    loadFallbackData();
+  }
+}
 
-  // === MOONSHOTAI KIMI (Direct) ===
-  {
-    id: "kimi-k25",
-    category: "moonshot",
-    name: { ko: "KIMI K2.5", en: "KIMI K2.5", ja: "KIMI K2.5" },
-    desc: { ko: "멀티모달 + 에이전트 스웜", en: "Multimodal + agent swarm", ja: "マルチモーダル + エージェントスウォーム" },
-    model: "kimi-k2.5",
-    cot: true,
-    context: "256K",
-    config: {
-      provider_name: "KIMI K2.5",
-      model: "kimi-k2.5",
-      api_format: "openai",
-      base_url: "https://api.moonshot.ai",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "kimi-k25-thinking",
-    category: "moonshot",
-    name: { ko: "KIMI K2.5 Thinking", en: "KIMI K2.5 Thinking", ja: "KIMI K2.5 Thinking" },
-    desc: { ko: "강화된 추론 모드", en: "Enhanced reasoning mode", ja: "強化推論モード" },
-    model: "kimi-k2.5-thinking",
-    cot: true,
-    context: "256K",
-    config: {
-      provider_name: "KIMI K2.5 Thinking",
-      model: "kimi-k2.5-thinking",
-      api_format: "openai",
-      base_url: "https://api.moonshot.ai",
-      enable_thinking: "true",
-      thinking_budget: "32000",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
+function loadFallbackData() {
+  const providers = FALLBACK_DATA.providers;
+  MODEL_CATALOG = {};
+  PRESET_CATEGORIES = {};
+  PRESETS = [];
 
-  // === MINIMAX (Direct) ===
-  {
-    id: "minimax-m27",
-    category: "minimax",
-    name: { ko: "MiniMax M2.7", en: "MiniMax M2.7", ja: "MiniMax M2.7" },
-    desc: { ko: "자기 진화 에이전트 모델", en: "Self-evolving agentic model", ja: "自己進化エージェントモデル" },
-    model: "minimax-m2.7",
-    cot: true,
-    context: "205K",
-    config: {
-      provider_name: "MiniMax M2.7",
-      model: "minimax-m2.7",
-      api_format: "openai",
-      base_url: "https://api.minimax.io",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "minimax-m25",
-    category: "minimax",
-    name: { ko: "MiniMax M2.5", en: "MiniMax M2.5", ja: "MiniMax M2.5" },
-    desc: { ko: "100 tok/s 고속 추론", en: "100 tok/s high-speed inference", ja: "100 tok/s高速推論" },
-    model: "minimax-m2.5",
-    cot: true,
-    context: "200K",
-    config: {
-      provider_name: "MiniMax M2.5",
-      model: "minimax-m2.5",
-      api_format: "openai",
-      base_url: "https://api.minimax.io",
-      enable_thinking: "true",
-      thinking_budget: "8192",
-      show_thinking_output: "true",
-      thinking_style: "minimal",
-    },
-  },
+  for (const [key, prov] of Object.entries(providers)) {
+    MODEL_CATALOG[key] = {
+      name: prov.name,
+      color: prov.color,
+      baseUrl: prov.baseUrl,
+      modelsApi: prov.modelsApi,
+      models: prov.models || [],
+    };
 
-  // === ZHIPUAI GLM (Direct) ===
-  {
-    id: "glm-51",
-    category: "zhipu",
-    name: { ko: "GLM-5.1", en: "GLM-5.1", ja: "GLM-5.1" },
-    desc: { ko: "744B 파라미터, 오픈소스", en: "744B params, open-source", ja: "744Bパラメータ、オープンソース" },
-    model: "glm-5.1",
-    cot: true,
-    context: "200K",
-    config: {
-      provider_name: "GLM-5.1",
-      model: "glm-5.1",
-      api_format: "openai",
-      base_url: "https://open.bigmodel.cn/api/paas",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "glm-47",
-    category: "zhipu",
-    name: { ko: "GLM-4.7", en: "GLM-4.7", ja: "GLM-4.7" },
-    desc: { ko: "코딩 + 에이전트 특화", en: "Coding + agent specialist", ja: "コーディング + エージェント特化" },
-    model: "glm-4.7",
-    cot: true,
-    context: "128K",
-    config: {
-      provider_name: "GLM-4.7",
-      model: "glm-4.7",
-      api_format: "openai",
-      base_url: "https://open.bigmodel.cn/api/paas",
-      enable_thinking: "true",
-      thinking_budget: "8192",
-      show_thinking_output: "true",
-      thinking_style: "minimal",
-    },
-  },
-  {
-    id: "glm-47-flash",
-    category: "zhipu",
-    name: { ko: "GLM-4.7 Flash", en: "GLM-4.7 Flash", ja: "GLM-4.7 Flash" },
-    desc: { ko: "무료, 초고속", en: "Free, ultra-fast", ja: "無料、超高速" },
-    model: "glm-4.7-flash",
-    cot: false,
-    context: "128K",
-    config: {
-      provider_name: "GLM-4.7 Flash",
-      model: "glm-4.7-flash",
-      api_format: "openai",
-      base_url: "https://open.bigmodel.cn/api/paas",
-      enable_thinking: "false",
-      show_thinking_output: "false",
-    },
-  },
+    PRESET_CATEGORIES[key] = {
+      name: prov.shortName || prov.name,
+      color: prov.color,
+    };
 
-  // === FIREWORKS (Routers) ===
-  {
-    id: "fw-kimi",
-    category: "fireworks",
-    name: { ko: "KIMI K2.5 Turbo (Fireworks)", en: "KIMI K2.5 Turbo (Fireworks)", ja: "KIMI K2.5 Turbo (Fireworks)" },
-    desc: { ko: "고성능 라우터 + CoT", en: "High-perf router + CoT", ja: "高性能ルーター + CoT" },
-    model: "accounts/fireworks/routers/kimi-k2p5-turbo",
-    cot: true,
-    context: "128K",
-    config: {
-      provider_name: "KIMI K2.5 (FW)",
-      model: "accounts/fireworks/routers/kimi-k2p5-turbo",
-      api_format: "anthropic",
-      base_url: "https://api.fireworks.ai/inference",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "fw-deepseek-r1",
-    category: "fireworks",
-    name: { ko: "DeepSeek R1 (Fireworks)", en: "DeepSeek R1 (Fireworks)", ja: "DeepSeek R1 (Fireworks)" },
-    desc: { ko: "추론 특화, Raw 사고 출력", en: "Reasoning specialist, raw thoughts", ja: "推論特化、生の思考出力" },
-    model: "accounts/fireworks/routers/deepseek-r1",
-    cot: true,
-    context: "64K",
-    config: {
-      provider_name: "DeepSeek R1 (FW)",
-      model: "accounts/fireworks/routers/deepseek-r1",
-      api_format: "openai",
-      base_url: "https://api.fireworks.ai/inference",
-      enable_thinking: "true",
-      thinking_display: "true",
-      show_thinking_output: "true",
-      thinking_style: "raw",
-    },
-  },
-  {
-    id: "fw-llama405b",
-    category: "fireworks",
-    name: { ko: "Llama 3.1 405B (Fireworks)", en: "Llama 3.1 405B (Fireworks)", ja: "Llama 3.1 405B (Fireworks)" },
-    desc: { ko: "최대 오픈소스 모델", en: "Largest open-source model", ja: "最大オープンソースモデル" },
-    model: "accounts/fireworks/models/llama-v3p1-405b-instruct",
-    cot: false,
-    context: "128K",
-    config: {
-      provider_name: "Llama 405B (FW)",
-      model: "accounts/fireworks/models/llama-v3p1-405b-instruct",
-      api_format: "openai",
-      base_url: "https://api.fireworks.ai/inference",
-      enable_thinking: "false",
-      show_thinking_output: "false",
-    },
-  },
-  {
-    id: "fw-glm5-fast",
-    category: "fireworks",
-    name: { ko: "GLM-5 Fast (Fireworks)", en: "GLM-5 Fast (Fireworks)", ja: "GLM-5 Fast (Fireworks)" },
-    desc: { ko: "고속 GLM 라우터", en: "Fast GLM router", ja: "高速GLMルーター" },
-    model: "accounts/fireworks/routers/glm-5-fast",
-    cot: true,
-    context: "128K",
-    config: {
-      provider_name: "GLM-5 Fast (FW)",
-      model: "accounts/fireworks/routers/glm-5-fast",
-      api_format: "openai",
-      base_url: "https://api.fireworks.ai/inference",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
+    if (prov.presets) {
+      for (const preset of prov.presets) {
+        const defaultConfig = {
+          provider_name: preset.custom ? (prov.shortName || prov.name) + " Custom" : preset.name?.en || preset.name,
+          model: preset.model,
+          api_format: preset.api_format || "openai",
+          base_url: prov.baseUrl,
+          enable_thinking: preset.cot ? "true" : "false",
+          show_thinking_output: preset.cot ? "true" : "false",
+          thinking_style: "default",
+        };
 
-  // === OPENROUTER ===
-  {
-    id: "or-claude",
-    category: "openrouter",
-    name: { ko: "Claude Opus (OpenRouter)", en: "Claude Opus (OpenRouter)", ja: "Claude Opus (OpenRouter)" },
-    desc: { ko: "통합 API로 Claude 접근", en: "Access Claude via unified API", ja: "統合APIでClaude接続" },
-    model: "anthropic/claude-opus-4.6",
-    cot: true,
-    context: "1M",
-    config: {
-      provider_name: "Claude Opus (OR)",
-      model: "anthropic/claude-opus-4.6",
-      api_format: "openai",
-      base_url: "https://openrouter.ai/api",
-      enable_thinking: "true",
-      thinking_budget: "32000",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "or-gemma4",
-    category: "openrouter",
-    name: { ko: "Gemma 4 31B (OpenRouter)", en: "Gemma 4 31B (OpenRouter)", ja: "Gemma 4 31B (OpenRouter)" },
-    desc: { ko: "세계 3위 오픈 모델", en: "#3 open model worldwide", ja: "世界3位オープンモデル" },
-    model: "google/gemma-4-31b-it",
-    cot: true,
-    context: "256K",
-    config: {
-      provider_name: "Gemma 4 31B (OR)",
-      model: "google/gemma-4-31b-it",
-      api_format: "openai",
-      base_url: "https://openrouter.ai/api",
-      enable_thinking: "true",
-      thinking_budget: "8192",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "or-free",
-    category: "openrouter",
-    name: { ko: "Free Router (OpenRouter)", en: "Free Router (OpenRouter)", ja: "Free Router (OpenRouter)" },
-    desc: { ko: "무료 모델 자동 선택", en: "Auto-select free models", ja: "無料モデル自動選択" },
-    model: "openrouter/free",
-    cot: false,
-    context: "128K",
-    config: {
-      provider_name: "Free Router",
-      model: "openrouter/free",
-      api_format: "openai",
-      base_url: "https://openrouter.ai/api",
-      enable_thinking: "false",
-      show_thinking_output: "false",
-    },
-  },
+        PRESETS.push({
+          id: preset.id,
+          category: key,
+          name: preset.name,
+          desc: preset.desc,
+          model: preset.model,
+          cot: preset.cot,
+          context: preset.context,
+          custom: preset.custom || false,
+          config: { ...defaultConfig, ...(preset.config || {}) },
+        });
+      }
+    }
+  }
+}
 
-  // === VERCEL AI ===
-  {
-    id: "vercel-grok",
-    category: "vercel",
-    name: { ko: "Grok 4.20 (Vercel)", en: "Grok 4.20 (Vercel)", ja: "Grok 4.20 (Vercel)" },
-    desc: { ko: "Vercel로 Grok 접근", en: "Access Grok via Vercel", ja: "VercelでGrokアクセス" },
-    model: "xai/grok-4.20",
-    cot: true,
-    context: "2M",
-    config: {
-      provider_name: "Grok 4.20 (Vercel)",
-      model: "xai/grok-4.20",
-      api_format: "openai",
-      base_url: "https://api.vercel.ai",
-      enable_thinking: "true",
-      thinking_budget: "32000",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "vercel-claude",
-    category: "vercel",
-    name: { ko: "Claude Sonnet (Vercel)", en: "Claude Sonnet (Vercel)", ja: "Claude Sonnet (Vercel)" },
-    desc: { ko: "마크업 없이 Claude 사용", en: "Use Claude with no markup", ja: "マークアップなしでClaude" },
-    model: "anthropic/claude-sonnet-4.6",
-    cot: true,
-    context: "200K",
-    config: {
-      provider_name: "Claude Sonnet (Vercel)",
-      model: "anthropic/claude-sonnet-4.6",
-      api_format: "anthropic",
-      base_url: "https://api.vercel.ai",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
+// ============================================================================
+// DYNAMIC MODEL LOADING - Fetch models from provider APIs with daily caching
+// ============================================================================
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+const modelApiCache = new Map();
 
-  // === VERTEX AI ===
-  {
-    id: "vertex-gemini",
-    category: "vertex",
-    name: { ko: "Gemini 3.1 Pro (Vertex)", en: "Gemini 3.1 Pro (Vertex)", ja: "Gemini 3.1 Pro (Vertex)" },
-    desc: { ko: "엔터프라이즈 Gemini", en: "Enterprise Gemini", ja: "エンタープライズGemini" },
-    model: "gemini-3.1-pro",
-    cot: true,
-    context: "2M",
-    config: {
-      provider_name: "Gemini Pro (Vertex)",
-      model: "gemini-3.1-pro",
-      api_format: "gemini",
-      base_url: "https://us-central1-aiplatform.googleapis.com",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-  {
-    id: "vertex-claude",
-    category: "vertex",
-    name: { ko: "Claude Sonnet (Vertex)", en: "Claude Sonnet (Vertex)", ja: "Claude Sonnet (Vertex)" },
-    desc: { ko: "GCP에서 Claude 사용", en: "Claude on GCP", ja: "GCPでClaude使用" },
-    model: "claude-sonnet-4-6@latest",
-    cot: true,
-    context: "200K",
-    config: {
-      provider_name: "Claude Sonnet (Vertex)",
-      model: "claude-sonnet-4-6@latest",
-      api_format: "anthropic",
-      base_url: "https://us-central1-aiplatform.googleapis.com",
-      enable_thinking: "true",
-      thinking_budget: "16384",
-      show_thinking_output: "true",
-      thinking_style: "default",
-    },
-  },
-];
+function getModelCache(providerKey) {
+  try {
+    const cached = localStorage.getItem(`hanabi-models-${providerKey}`);
+    if (!cached) return null;
+    const { models, timestamp } = JSON.parse(cached);
+    if (Date.now() - timestamp > CACHE_TTL_MS) {
+      localStorage.removeItem(`hanabi-models-${providerKey}`);
+      return null;
+    }
+    return models;
+  } catch {
+    return null;
+  }
+}
+
+function setModelCache(providerKey, models) {
+  try {
+    localStorage.setItem(
+      `hanabi-models-${providerKey}`,
+      JSON.stringify({ models, timestamp: Date.now() })
+    );
+  } catch {
+    // localStorage full or unavailable, ignore
+  }
+}
+
+async function fetchProviderModels(providerKey, apiKey, forceRefresh = false) {
+  const provider = MODEL_CATALOG[providerKey];
+  if (!provider || !provider.modelsApi) return null;
+
+  // Check in-memory cache first
+  const memKey = `${providerKey}:${apiKey || "nokey"}`;
+  if (!forceRefresh && modelApiCache.has(memKey)) {
+    return modelApiCache.get(memKey);
+  }
+
+  // Check localStorage daily cache (only for no-auth providers like OpenRouter)
+  if (!forceRefresh && !apiKey) {
+    const cached = getModelCache(providerKey);
+    if (cached) {
+      modelApiCache.set(memKey, cached);
+      return cached;
+    }
+  }
+
+  try {
+    const headers = { "Content-Type": "application/json" };
+
+    // Add auth headers based on provider
+    if (apiKey) {
+      if (providerKey === "anthropic") {
+        headers["x-api-key"] = apiKey;
+        headers["anthropic-version"] = "2023-06-01";
+      } else if (providerKey === "gemini") {
+        // Gemini uses query param, handled below
+      } else {
+        headers["Authorization"] = `Bearer ${apiKey}`;
+      }
+    }
+
+    let url = provider.baseUrl + provider.modelsApi;
+    if (providerKey === "gemini" && apiKey) {
+      url += `?key=${apiKey}`;
+    }
+
+    const response = await fetch(url, { headers });
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    let models = [];
+
+    // Parse response based on provider format
+    if (providerKey === "openrouter" && data.data) {
+      models = data.data.map((m) => ({
+        id: m.id,
+        name: m.name || m.id,
+        tier: "fast",
+        context: m.context_length || 128000,
+        output: m.top_provider?.max_completion_tokens || 16000,
+        cot: false,
+      }));
+    } else if (data.data) {
+      // OpenAI-compatible format
+      models = data.data.map((m) => ({
+        id: m.id,
+        name: m.id,
+        tier: "fast",
+        context: 128000,
+        output: 16000,
+        cot: false,
+      }));
+    } else if (data.models) {
+      // Gemini format
+      models = data.models.map((m) => ({
+        id: m.name?.replace("models/", "") || m.name,
+        name: m.displayName || m.name,
+        tier: "fast",
+        context: m.inputTokenLimit || 128000,
+        output: m.outputTokenLimit || 8192,
+        cot: false,
+      }));
+    }
+
+    // Cache in memory
+    modelApiCache.set(memKey, models);
+
+    // Cache in localStorage for no-auth providers (daily refresh)
+    if (!apiKey && models.length > 0) {
+      setModelCache(providerKey, models);
+    }
+
+    return models;
+  } catch (err) {
+    console.warn(`Failed to fetch models for ${providerKey}:`, err);
+    return null;
+  }
+}
+
+// Refresh button handler for model picker (force refresh bypasses cache)
+async function refreshProviderModels(providerKey, apiKey, callback) {
+  const memKey = `${providerKey}:${apiKey || "nokey"}`;
+  modelApiCache.delete(memKey);
+  localStorage.removeItem(`hanabi-models-${providerKey}`);
+
+  const models = await fetchProviderModels(providerKey, apiKey, true);
+  if (models && models.length > 0 && callback) {
+    callback(models);
+  }
+  return models;
+}
 
 let currentLang = "ko",
   providerCount = 0,
@@ -1231,7 +785,7 @@ function renderPresetDropdown() {
   const dropdown = document.getElementById("preset-dropdown");
   if (!dropdown) return;
 
-  const categories = ["all", "anthropic", "openai", "gemini", "xai", "deepseek", "moonshot", "minimax", "zhipu", "fireworks", "openrouter", "vercel", "vertex"];
+  const categories = ["all", "anthropic", "openai", "gemini", "xai", "moonshot", "minimax", "zhipu", "fireworks", "openrouter", "vercel", "vertex", "ollama", "nanogpt"];
 
   // Build tabs
   let tabsHtml = categories.map(catKey => {
@@ -1281,7 +835,7 @@ function renderPresetDropdown() {
   dropdown.innerHTML = `
     <div class="modal-header">
       <span class="modal-title">${escapeHtml(t("presets"))}</span>
-      <button type="button" class="modal-close" onclick="closePresetDropdown()" aria-label="Close">${IC.x}</button>
+      <button type="button" class="modal-close" onclick="closePresetDropdown()" aria-label="${escapeHtml(t("close"))}">${IC.x}</button>
     </div>
     <div class="preset-header">
       <div class="preset-search">
@@ -1332,7 +886,10 @@ window.searchPresets = function(q) {
 // ============================================================================
 // INITIALIZATION
 // ============================================================================
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  // Load data from JSON files first
+  await loadDataFromJSON();
+
   initTheme();
   setupLanguageSelector();
   setupKeyboardShortcuts();
@@ -1377,15 +934,23 @@ document.addEventListener("DOMContentLoaded", () => {
   // Close dropdowns on outside click
   document.addEventListener("click", (e) => {
     // Close model picker only if clicking outside the entire wrap
-    if (activeModelPicker) {
+    // Skip if target was removed from DOM (e.g., by re-render after tab click)
+    if (activeModelPicker && e.target.isConnected) {
       const isInsideWrap = e.target.closest(".model-picker-wrap");
       const isInsideDropdown = e.target.closest(".model-picker-dropdown");
       if (!isInsideWrap && !isInsideDropdown) {
         closeModelPicker();
       }
     }
-    if (!e.target.closest(".preset-dropdown-wrap")) {
-      window.closePresetDropdown();
+    // Close preset dropdown only if clicking outside both the wrap and the dropdown itself
+    // (dropdown can be position:fixed on mobile, escaping the wrap)
+    // Skip if target was removed from DOM (e.g., by re-render after tab click)
+    if (e.target.isConnected) {
+      const isInsidePresetWrap = e.target.closest(".preset-dropdown-wrap");
+      const isInsidePresetDropdown = e.target.closest(".preset-dropdown");
+      if (!isInsidePresetWrap && !isInsidePresetDropdown) {
+        window.closePresetDropdown();
+      }
     }
   });
 
@@ -1575,7 +1140,7 @@ function getProviderData(card) {
 
 function deleteSelected() {
   if (selectedCards.size === 0) return;
-  if (!confirm(t("deleteSelected") + "?")) return;
+  if (!confirm(t("confirmDeleteSelected"))) return;
   selectedCards.forEach((id) => {
     const c = document.getElementById(id);
     if (c) c.remove();
@@ -1660,6 +1225,13 @@ function showEmptyState() {
     "</button></div>";
 }
 
+function hideEmptyState() {
+  const c = document.getElementById("providers-container");
+  if (!c) return;
+  const empty = c.querySelector(".empty-state");
+  if (empty) empty.remove();
+}
+
 function addProvider(data) {
   const container = document.getElementById("providers-container");
   if (!container) return;
@@ -1718,6 +1290,13 @@ function createProviderHTML(idx, d) {
     escapeHtml(t("drag")) +
     '">' +
     IC.grip +
+    "</button>" +
+    '<button type="button" onclick="shareProvider(' +
+    idx +
+    ')" title="' +
+    escapeHtml(t("shareProvider")) +
+    '">' +
+    IC.share +
     "</button>" +
     '<button type="button" onclick="duplicateProvider(' +
     idx +
@@ -1919,7 +1498,7 @@ function openModelPicker(idx) {
   let html = `
     <div class="modal-header">
       <span class="modal-title">${escapeHtml(t("selectModel"))}</span>
-      <button type="button" class="modal-close" onclick="closeModelPicker()" aria-label="Close">${IC.x}</button>
+      <button type="button" class="modal-close" onclick="closeModelPicker()" aria-label="${escapeHtml(t("close"))}">${IC.x}</button>
     </div>
     <div class="model-picker-header">
       <div class="model-picker-search">
@@ -1929,7 +1508,7 @@ function openModelPicker(idx) {
       <div class="model-picker-tabs" role="tablist">
         <button type="button" class="model-tab active" data-provider="all" onclick="filterModelsByProvider(${idx}, 'all')">${escapeHtml(t("allProviders"))}</button>
         ${Object.entries(MODEL_CATALOG).map(([key, prov]) =>
-          `<button type="button" class="model-tab" data-provider="${key}" onclick="filterModelsByProvider(${idx}, '${key}')" style="--tab-color: ${prov.color}">${escapeHtml(prov.name.split(" ")[0])}</button>`
+          `<button type="button" class="model-tab" data-provider="${key}" onclick="filterModelsByProvider(${idx}, '${key}')" style="--tab-color: var(--provider-${key})">${escapeHtml(prov.name.split(" ")[0])}</button>`
         ).join("")}
       </div>
     </div>
@@ -2001,7 +1580,9 @@ function renderModelList(idx, preferredFormat, filter = "", providerFilter = "al
   models.forEach((m, index) => {
     const isSelected = m.id === currentModel;
     const contextK = m.context >= 1000000 ? (m.context / 1000000) + "M" : Math.round(m.context / 1000) + "K";
+    const outputK = m.output >= 1000000 ? (m.output / 1000000) + "M" : Math.round(m.output / 1000) + "K";
     const modelDisplay = m.id.length > 28 ? m.id.slice(0, 28) + '...' : m.id;
+    const tierLabel = { flagship: "Flagship", fast: "Fast", efficient: "Lite", legacy: "Legacy", router: "Router", firepass: "Firepass" }[m.tier] || m.tier;
 
     html += `
       <button type="button"
@@ -2017,8 +1598,10 @@ function renderModelList(idx, preferredFormat, filter = "", providerFilter = "al
         </span>
         <span class="model-card-id">${escapeHtml(modelDisplay)}</span>
         <div class="model-card-meta">
+          <span class="model-card-tier" data-tier="${m.tier}">${tierLabel}</span>
           <span class="model-card-provider" data-provider="${m.provKey}">${escapeHtml(m.provName.split(" ")[0])}</span>
           <span class="model-card-ctx">${contextK}</span>
+          <span class="model-card-output">${outputK}</span>
           ${m.cot ? '<span class="model-card-cot">CoT</span>' : ''}
         </div>
         ${isSelected ? '<span class="model-card-check">' + IC.check + '</span>' : ''}
@@ -2398,7 +1981,7 @@ function toggleAdvanced(idx) {
 
 function deleteProvider(idx) {
   const card = document.getElementById("provider-" + idx);
-  if (!card || !confirm(t("delete") + "?")) return;
+  if (!card || !confirm(t("confirmDelete"))) return;
   selectedCards.delete(card.id);
   card.remove();
   updateProviderNumbers();
@@ -2461,7 +2044,7 @@ function updateProviderNumbers() {
 function clearAll() {
   const cards = document.querySelectorAll(".provider-card");
   if (cards.length === 0) return;
-  if (!confirm(t("clearAll") + "?")) return;
+  if (!confirm(t("confirmClearAll"))) return;
   cards.forEach((c) => c.remove());
   selectedCards.clear();
   updateSelectionBar();
@@ -2572,7 +2155,7 @@ function generateShareCode() {
       return copy;
     });
     const json = JSON.stringify(safeConfigs);
-    const encoded = btoa(unescape(encodeURIComponent(json)));
+    const encoded = btoa(encodeURIComponent(json).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
     const code = "HNB1:" + encoded; // Version prefix for future compatibility
 
     // Copy to clipboard
@@ -2603,7 +2186,7 @@ function importShareCode(code) {
     }
 
     const encoded = code.slice(5); // Remove "HNB1:" prefix
-    const json = decodeURIComponent(escape(atob(encoded)));
+    const json = decodeURIComponent(atob(encoded).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
     const configs = JSON.parse(json);
 
     if (!Array.isArray(configs) || configs.length === 0) {
@@ -2621,6 +2204,150 @@ function importShareCode(code) {
   } catch (e) {
     showToast(t("importFailed"), "error");
   }
+}
+
+// Per-provider share with optional API key inclusion + HTML card export
+function shareProvider(idx) {
+  const card = document.getElementById("provider-" + idx);
+  if (!card) return;
+
+  const cfg = extractConfig(card);
+  if (!cfg) return;
+
+  // Get model info for display
+  const modelInfo = findModelInfo(cfg.model);
+  const providerColor = modelInfo?.providerColor || "#c9a0c4";
+
+  // Create share dialog with tabs
+  const overlay = document.createElement("div");
+  overlay.className = "share-overlay";
+  overlay.innerHTML = `
+    <div class="share-dialog share-dialog-wide">
+      <div class="share-dialog-header">
+        <span>${escapeHtml(t("shareProviderTitle"))}</span>
+        <button type="button" class="btn-close" onclick="this.closest('.share-overlay').remove()">${IC.x}</button>
+      </div>
+      <div class="share-dialog-body">
+        <div class="share-tabs">
+          <button type="button" class="share-tab active" data-tab="code">${escapeHtml(t("shareCodeLabel"))}</button>
+          <button type="button" class="share-tab" data-tab="html">HTML</button>
+        </div>
+        <label class="share-api-toggle">
+          <input type="checkbox" id="share-include-key">
+          <span>${escapeHtml(t("includeApiKey"))}</span>
+        </label>
+        <div class="share-panel" data-panel="code">
+          <div class="share-code-row">
+            <input type="text" id="share-code-input" readonly>
+            <button type="button" class="btn-copy-code" onclick="copyShareCode(this)">${escapeHtml(t("copyCode"))}</button>
+          </div>
+        </div>
+        <div class="share-panel" data-panel="html" style="display:none">
+          <div class="share-html-preview" id="share-html-preview"></div>
+          <textarea id="share-html-input" readonly></textarea>
+          <button type="button" class="btn-copy-html" onclick="copyShareCode(this)">${escapeHtml(t("copyCode"))}</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const checkbox = overlay.querySelector("#share-include-key");
+  const codeInput = overlay.querySelector("#share-code-input");
+  const htmlInput = overlay.querySelector("#share-html-input");
+  const htmlPreview = overlay.querySelector("#share-html-preview");
+  const tabs = overlay.querySelectorAll(".share-tab");
+  const panels = overlay.querySelectorAll(".share-panel");
+
+  // Tab switching
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      const target = tab.dataset.tab;
+      panels.forEach(p => {
+        p.style.display = p.dataset.panel === target ? "block" : "none";
+      });
+    });
+  });
+
+  function generateHTML(shareCfg) {
+    const name = escapeHtml(shareCfg.provider_name || "Provider");
+    const model = escapeHtml(shareCfg.model || "");
+    const format = escapeHtml(shareCfg.api_format || "openai");
+    const baseUrl = escapeHtml(shareCfg.base_url || "");
+    const hasKey = !!shareCfg.api_key;
+    const apiKeyDisplay = hasKey ? escapeHtml(shareCfg.api_key) : '<span style="opacity:0.4">API 키 없음</span>';
+    const cotEnabled = shareCfg.enable_thinking === "true";
+    const cotBadge = cotEnabled ? '<span style="background:#2a2230;color:#c9a0c4;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:600;margin-left:8px">CoT</span>' : '';
+
+    return `<div style="background:#131315;border-radius:6px;padding:14px 16px;border:1px solid #2a2a2f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+<div style="width:8px;height:32px;background:${providerColor};border-radius:2px"></div>
+<div style="font-size:22px;font-weight:600;color:#d5d3d8">${name}${cotBadge}</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px 16px;font-size:13px">
+<div><span style="color:#929098">모델</span><div style="color:#d5d3d8;margin-top:2px;word-break:break-all">${model}</div></div>
+<div><span style="color:#929098">API 형식</span><div style="color:#d5d3d8;margin-top:2px">${format}</div></div>
+<div style="grid-column:span 2"><span style="color:#929098">Base URL</span><div style="color:#d5d3d8;margin-top:2px;word-break:break-all">${baseUrl}</div></div>
+${hasKey ? `<div style="grid-column:span 2"><span style="color:#929098">API Key</span><div style="color:#7aaa7e;margin-top:2px;font-family:monospace;word-break:break-all">${apiKeyDisplay}</div></div>` : ''}
+</div>
+<div style="margin-top:12px;padding-top:10px;border-top:1px solid #2a2a2f;display:flex;align-items:center;gap:6px">
+<span style="color:#c9a0c4;font-weight:600;font-size:12px">Hanabi</span><span style="color:#c9a0c4;opacity:0.5;font-size:10px">花火</span>
+<span style="margin-left:auto;color:#929098;font-size:11px">mercuriusdream.com/hanabi</span>
+</div>
+</div>`;
+  }
+
+  function updateOutputs() {
+    const includeKey = checkbox.checked;
+    const shareCfg = { ...cfg };
+    if (!includeKey) {
+      delete shareCfg.api_key;
+    }
+
+    // Code output
+    const json = JSON.stringify([shareCfg]);
+    const encoded = btoa(encodeURIComponent(json).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
+    codeInput.value = "HNB1:" + encoded;
+
+    // HTML output
+    const html = generateHTML(shareCfg);
+    htmlInput.value = html;
+    htmlPreview.innerHTML = html;
+  }
+
+  checkbox.addEventListener("change", updateOutputs);
+  updateOutputs();
+
+  // Close on overlay click
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) overlay.remove();
+  });
+
+  // Close on Escape
+  const handleEsc = (e) => {
+    if (e.key === "Escape") {
+      overlay.remove();
+      document.removeEventListener("keydown", handleEsc);
+    }
+  };
+  document.addEventListener("keydown", handleEsc);
+}
+
+function copyShareCode(btn) {
+  const input = btn.previousElementSibling;
+  if (!input) return;
+  navigator.clipboard.writeText(input.value).then(() => {
+    const original = btn.textContent;
+    btn.textContent = t("codeCopied");
+    btn.classList.add("copied");
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove("copied");
+    }, 1500);
+  });
 }
 
 function highlightJSON(str) {
@@ -2757,7 +2484,7 @@ function downloadJSON() {
 
 function loadExample() {
   const existing = document.querySelectorAll(".provider-card");
-  if (existing.length > 0 && !confirm(t("clearAll") + "?")) return;
+  if (existing.length > 0 && !confirm(t("confirmClearAll"))) return;
   existing.forEach((c) => c.remove());
   selectedCards.clear();
   providerCount = 0;
@@ -2838,4 +2565,6 @@ window.bulkSetModel = bulkSetModel;
 window.bulkSetFormat = bulkSetFormat;
 window.generateShareCode = generateShareCode;
 window.importShareCode = importShareCode;
+window.shareProvider = shareProvider;
+window.copyShareCode = copyShareCode;
 window.closeModelPicker = closeModelPicker;

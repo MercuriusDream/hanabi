@@ -9,6 +9,7 @@ hanabi/
 ├── index.html      # WebUI Config Generator
 ├── style.css       # WebUI styles (dark/light theme, CSS custom properties)
 ├── app.js          # WebUI logic (vanilla JS, no framework)
+├── data.json       # Unified provider data (models + presets in one file)
 ├── src/
 │   └── main.js     # RisuAI plugin (v2.0.0, Plugin API 3.0)
 └── README.md
@@ -46,6 +47,28 @@ All colors use CSS custom properties defined in `:root` / `[data-theme="light"]`
 - `--accent` — primary accent (mauve/sakura pink)
 - `--danger`, `--success`, `--info`, `--warn` — semantic colors
 
+## Unified Data (data.json)
+
+Consolidated provider data that replaces the old separate `models.json` and `presets.json` files:
+
+```json
+{
+  "providers": {
+    "providerKey": {
+      "name": "Full Provider Name",
+      "shortName": "Display Name",
+      "color": "#hexcolor",
+      "baseUrl": "https://api.provider.com",
+      "modelsApi": "/v1/models",
+      "models": [...],
+      "presets": [...]
+    }
+  }
+}
+```
+
+Each provider contains both its model catalog AND preset configurations, eliminating duplication and ensuring consistency.
+
 ## Conventions
 
 - All user-facing strings go through `i18n` object and `t()` function
@@ -53,6 +76,7 @@ All colors use CSS custom properties defined in `:root` / `[data-theme="light"]`
 - Boolean config values are strings `"true"` / `"false"` (not actual booleans)
 - The plugin checks both string and boolean equality for backwards compatibility: `cfg.enable_thinking !== "false" && cfg.enable_thinking !== false`
 - Animations are minimal — only functional transitions (advanced fields expand, checkbox toggle, toast fade)
+- **No borders/outlines** — UI uses background color changes and subtle shadows for visual hierarchy
 
 ## License
 

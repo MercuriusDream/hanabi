@@ -1,0 +1,318 @@
+{
+  "providers": {
+    "anthropic": {
+      "name": "Anthropic",
+      "shortName": "Claude",
+      "color": "#d4a27a",
+      "baseUrl": "https://api.anthropic.com",
+      "modelsApi": "/v1/models",
+      "models": [
+        { "id": "claude-opus-4-6", "name": "Claude Opus 4.6", "tier": "flagship", "context": 1000000, "output": 128000, "cot": true, "recommended": true },
+        { "id": "claude-sonnet-4-6", "name": "Claude Sonnet 4.6", "tier": "fast", "context": 1000000, "output": 64000, "cot": true, "recommended": true },
+        { "id": "claude-opus-4-5", "name": "Claude Opus 4.5", "tier": "flagship", "context": 200000, "output": 32000, "cot": true },
+        { "id": "claude-sonnet-4-5", "name": "Claude Sonnet 4.5", "tier": "fast", "context": 200000, "output": 16000, "cot": true },
+        { "id": "claude-haiku-4-5", "name": "Claude Haiku 4.5", "tier": "efficient", "context": 200000, "output": 8192, "cot": false, "recommended": true },
+        { "id": "claude-opus-4-1", "name": "Claude Opus 4.1", "tier": "legacy", "context": 200000, "output": 32000, "cot": true },
+        { "id": "claude-sonnet-4", "name": "Claude Sonnet 4", "tier": "legacy", "context": 200000, "output": 16000, "cot": true },
+        { "id": "claude-opus-4", "name": "Claude Opus 4", "tier": "legacy", "context": 200000, "output": 16000, "cot": false }
+      ],
+      "presets": [
+        { "id": "anthropic-custom", "custom": true, "name": { "ko": "Anthropic 커스텀", "en": "Anthropic Custom", "ja": "Anthropicカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "claude-opus-46", "name": { "ko": "Claude Opus 4.6", "en": "Claude Opus 4.6", "ja": "Claude Opus 4.6" }, "desc": { "ko": "최고 성능 + 1M 컨텍스트 + CoT", "en": "Best performance + 1M context + CoT", "ja": "最高性能 + 1Mコンテキスト + CoT" }, "model": "claude-opus-4-6", "cot": true, "context": "1M", "config": { "thinking_budget": "32000" } },
+        { "id": "claude-sonnet-46", "name": { "ko": "Claude Sonnet 4.6", "en": "Claude Sonnet 4.6", "ja": "Claude Sonnet 4.6" }, "desc": { "ko": "균형 잡힌 성능 + CoT", "en": "Balanced performance + CoT", "ja": "バランスの取れた性能 + CoT" }, "model": "claude-sonnet-4-6", "cot": true, "context": "1M", "config": { "thinking_budget": "16384" } },
+        { "id": "claude-haiku-45", "name": { "ko": "Claude Haiku 4.5", "en": "Claude Haiku 4.5", "ja": "Claude Haiku 4.5" }, "desc": { "ko": "최저 비용, 초고속", "en": "Lowest cost, ultra-fast", "ja": "最低コスト、超高速" }, "model": "claude-haiku-4-5", "cot": false, "context": "200K" },
+        { "id": "claude-opus-45", "name": { "ko": "Claude Opus 4.5", "en": "Claude Opus 4.5", "ja": "Claude Opus 4.5" }, "desc": { "ko": "이전 세대 플래그십", "en": "Previous gen flagship", "ja": "前世代フラッグシップ" }, "model": "claude-opus-4-5", "cot": true, "context": "200K", "config": { "thinking_budget": "16384" } },
+        { "id": "claude-sonnet-45", "name": { "ko": "Claude Sonnet 4.5", "en": "Claude Sonnet 4.5", "ja": "Claude Sonnet 4.5" }, "desc": { "ko": "안정적인 범용 모델", "en": "Stable general-purpose model", "ja": "安定した汎用モデル" }, "model": "claude-sonnet-4-5", "cot": true, "context": "200K", "config": { "thinking_budget": "16384" } },
+        { "id": "claude-opus-41", "name": { "ko": "Claude Opus 4.1", "en": "Claude Opus 4.1", "ja": "Claude Opus 4.1" }, "desc": { "ko": "레거시 플래그십", "en": "Legacy flagship", "ja": "レガシーフラッグシップ" }, "model": "claude-opus-4-1", "cot": true, "context": "200K", "config": { "thinking_budget": "16384" } }
+      ]
+    },
+    "openai": {
+      "name": "OpenAI",
+      "shortName": "OpenAI",
+      "color": "#74aa9c",
+      "baseUrl": "https://api.openai.com",
+      "modelsApi": "/v1/models",
+      "models": [
+        { "id": "gpt-5.4", "name": "GPT-5.4", "tier": "flagship", "context": 1000000, "output": 128000, "cot": true, "recommended": true },
+        { "id": "gpt-5.4-pro", "name": "GPT-5.4 Pro", "tier": "flagship", "context": 1000000, "output": 128000, "cot": true },
+        { "id": "gpt-5.4-mini", "name": "GPT-5.4 Mini", "tier": "fast", "context": 272000, "output": 32768, "cot": true, "recommended": true },
+        { "id": "gpt-5.4-nano", "name": "GPT-5.4 Nano", "tier": "efficient", "context": 128000, "output": 16384, "cot": false },
+        { "id": "o4-mini", "name": "o4-mini", "tier": "fast", "context": 200000, "output": 100000, "cot": true, "recommended": true },
+        { "id": "o3", "name": "o3", "tier": "flagship", "context": 200000, "output": 100000, "cot": true },
+        { "id": "o3-pro", "name": "o3 Pro", "tier": "flagship", "context": 200000, "output": 100000, "cot": true },
+        { "id": "o3-mini", "name": "o3-mini", "tier": "fast", "context": 200000, "output": 100000, "cot": true },
+        { "id": "gpt-5.3", "name": "GPT-5.3", "tier": "fast", "context": 128000, "output": 32768, "cot": true },
+        { "id": "gpt-5.2", "name": "GPT-5.2", "tier": "fast", "context": 128000, "output": 32768, "cot": true },
+        { "id": "gpt-5.1", "name": "GPT-5.1", "tier": "legacy", "context": 128000, "output": 32768, "cot": true },
+        { "id": "gpt-5", "name": "GPT-5", "tier": "legacy", "context": 128000, "output": 16384, "cot": false },
+        { "id": "gpt-4.1", "name": "GPT-4.1", "tier": "legacy", "context": 1000000, "output": 32768, "cot": false },
+        { "id": "gpt-4.1-mini", "name": "GPT-4.1 Mini", "tier": "legacy", "context": 1000000, "output": 16384, "cot": false },
+        { "id": "gpt-4o", "name": "GPT-4o", "tier": "legacy", "context": 128000, "output": 16384, "cot": false },
+        { "id": "gpt-4o-mini", "name": "GPT-4o Mini", "tier": "legacy", "context": 128000, "output": 16384, "cot": false }
+      ],
+      "presets": [
+        { "id": "openai-custom", "custom": true, "name": { "ko": "OpenAI 커스텀", "en": "OpenAI Custom", "ja": "OpenAIカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "gpt-54", "name": { "ko": "GPT-5.4", "en": "GPT-5.4", "ja": "GPT-5.4" }, "desc": { "ko": "최신 플래그십, 1M 컨텍스트", "en": "Latest flagship, 1M context", "ja": "最新フラッグシップ、1Mコンテキスト" }, "model": "gpt-5.4", "cot": true, "context": "1M", "config": { "thinking_budget": "32000" } },
+        { "id": "gpt-54-mini", "name": { "ko": "GPT-5.4 Mini", "en": "GPT-5.4 Mini", "ja": "GPT-5.4 Mini" }, "desc": { "ko": "고속 + 저비용", "en": "Fast + low cost", "ja": "高速 + 低コスト" }, "model": "gpt-5.4-mini", "cot": true, "context": "272K", "config": { "thinking_budget": "8192", "thinking_style": "minimal" } },
+        { "id": "o4-mini", "name": { "ko": "o4-mini", "en": "o4-mini", "ja": "o4-mini" }, "desc": { "ko": "추론 특화, 100K 출력", "en": "Reasoning specialist, 100K output", "ja": "推論特化、100K出力" }, "model": "o4-mini", "cot": true, "context": "200K", "config": { "thinking_budget": "32000" } },
+        { "id": "o3", "name": { "ko": "o3", "en": "o3", "ja": "o3" }, "desc": { "ko": "심층 추론 모델", "en": "Deep reasoning model", "ja": "深層推論モデル" }, "model": "o3", "cot": true, "context": "200K", "config": { "thinking_budget": "32000" } },
+        { "id": "o3-mini", "name": { "ko": "o3-mini", "en": "o3-mini", "ja": "o3-mini" }, "desc": { "ko": "경량 추론 모델", "en": "Lightweight reasoning", "ja": "軽量推論モデル" }, "model": "o3-mini", "cot": true, "context": "200K", "config": { "thinking_budget": "16384" } },
+        { "id": "gpt-41", "name": { "ko": "GPT-4.1", "en": "GPT-4.1", "ja": "GPT-4.1" }, "desc": { "ko": "1M 컨텍스트, 코딩 특화", "en": "1M context, coding specialist", "ja": "1Mコンテキスト、コーディング特化" }, "model": "gpt-4.1", "cot": false, "context": "1M" },
+        { "id": "gpt-4o", "name": { "ko": "GPT-4o", "en": "GPT-4o", "ja": "GPT-4o" }, "desc": { "ko": "레거시 멀티모달", "en": "Legacy multimodal", "ja": "レガシーマルチモーダル" }, "model": "gpt-4o", "cot": false, "context": "128K" }
+      ]
+    },
+    "gemini": {
+      "name": "Google Gemini",
+      "shortName": "Gemini",
+      "color": "#8b9dc3",
+      "baseUrl": "https://generativelanguage.googleapis.com",
+      "modelsApi": "/v1beta/models",
+      "models": [
+        { "id": "gemini-3.1-pro", "name": "Gemini 3.1 Pro", "tier": "flagship", "context": 2000000, "output": 65536, "cot": true, "recommended": true },
+        { "id": "gemini-3.1-flash-lite", "name": "Gemini 3.1 Flash Lite", "tier": "efficient", "context": 1000000, "output": 32768, "cot": true, "recommended": true },
+        { "id": "gemini-3-flash", "name": "Gemini 3 Flash", "tier": "fast", "context": 1000000, "output": 65536, "cot": true, "recommended": true },
+        { "id": "gemini-2.5-pro", "name": "Gemini 2.5 Pro", "tier": "flagship", "context": 1000000, "output": 65536, "cot": true },
+        { "id": "gemini-2.5-flash", "name": "Gemini 2.5 Flash", "tier": "fast", "context": 1000000, "output": 65536, "cot": true },
+        { "id": "gemma-4-31b-it", "name": "Gemma 4 31B", "tier": "fast", "context": 256000, "output": 8192, "cot": true },
+        { "id": "gemma-4-26b-a4b-it", "name": "Gemma 4 26B-A4B", "tier": "efficient", "context": 256000, "output": 8192, "cot": true }
+      ],
+      "presets": [
+        { "id": "gemini-custom", "custom": true, "name": { "ko": "Gemini 커스텀", "en": "Gemini Custom", "ja": "Geminiカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "gemini-31-pro", "name": { "ko": "Gemini 3.1 Pro", "en": "Gemini 3.1 Pro", "ja": "Gemini 3.1 Pro" }, "desc": { "ko": "최대 2M 컨텍스트 + CoT", "en": "Up to 2M context + CoT", "ja": "最大2Mコンテキスト + CoT" }, "model": "gemini-3.1-pro", "cot": true, "context": "2M", "config": { "thinking_budget": "16384" } },
+        { "id": "gemini-3-flash", "name": { "ko": "Gemini 3 Flash", "en": "Gemini 3 Flash", "ja": "Gemini 3 Flash" }, "desc": { "ko": "Pro급 추론 + Flash 속도", "en": "Pro-grade reasoning + Flash speed", "ja": "Pro級推論 + Flash速度" }, "model": "gemini-3-flash", "cot": true, "context": "1M", "config": { "thinking_budget": "8192", "thinking_style": "minimal" } },
+        { "id": "gemini-31-flash-lite", "name": { "ko": "Gemini 3.1 Flash Lite", "en": "Gemini 3.1 Flash Lite", "ja": "Gemini 3.1 Flash Lite" }, "desc": { "ko": "최저가 + 최고속", "en": "Lowest cost + fastest", "ja": "最低価格 + 最高速" }, "model": "gemini-3.1-flash-lite", "cot": true, "context": "1M", "config": { "thinking_budget": "8192", "thinking_style": "minimal" } },
+        { "id": "gemini-25-pro", "name": { "ko": "Gemini 2.5 Pro", "en": "Gemini 2.5 Pro", "ja": "Gemini 2.5 Pro" }, "desc": { "ko": "이전 세대 Pro + 적응형 사고", "en": "Previous gen Pro + adaptive thinking", "ja": "前世代Pro + 適応的思考" }, "model": "gemini-2.5-pro", "cot": true, "context": "1M", "config": { "thinking_budget": "16384" } }
+      ]
+    },
+    "xai": {
+      "name": "xAI",
+      "shortName": "Grok",
+      "color": "#e0e0e0",
+      "baseUrl": "https://api.x.ai",
+      "models": [
+        { "id": "grok-4.20", "name": "Grok 4.20", "tier": "flagship", "context": 2000000, "output": 32000, "cot": true, "recommended": true },
+        { "id": "grok-4.20-multi-agent", "name": "Grok 4.20 Multi Agent", "tier": "flagship", "context": 2000000, "output": 32000, "cot": true },
+        { "id": "grok-4.1", "name": "Grok 4.1", "tier": "fast", "context": 256000, "output": 8000, "cot": true, "recommended": true },
+        { "id": "grok-4.1-fast", "name": "Grok 4.1 Fast", "tier": "efficient", "context": 2000000, "output": 8000, "cot": false },
+        { "id": "grok-4", "name": "Grok 4", "tier": "fast", "context": 256000, "output": 8000, "cot": true },
+        { "id": "grok-4-fast", "name": "Grok 4 Fast", "tier": "efficient", "context": 256000, "output": 8000, "cot": false }
+      ],
+      "presets": [
+        { "id": "xai-custom", "custom": true, "name": { "ko": "xAI 커스텀", "en": "xAI Custom", "ja": "xAIカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "grok-420", "name": { "ko": "Grok 4.20", "en": "Grok 4.20", "ja": "Grok 4.20" }, "desc": { "ko": "2M 컨텍스트 + 에이전트 툴콜", "en": "2M context + agent tool calls", "ja": "2Mコンテキスト + エージェントツールコール" }, "model": "grok-4.20", "cot": true, "context": "2M", "config": { "thinking_budget": "32000" } },
+        { "id": "grok-41", "name": { "ko": "Grok 4.1", "en": "Grok 4.1", "ja": "Grok 4.1" }, "desc": { "ko": "창의적 + 협력적 상호작용", "en": "Creative + collaborative interactions", "ja": "クリエイティブ + 協力的インタラクション" }, "model": "grok-4.1", "cot": true, "context": "256K", "config": { "thinking_budget": "16384" } },
+        { "id": "grok-41-fast", "name": { "ko": "Grok 4.1 Fast", "en": "Grok 4.1 Fast", "ja": "Grok 4.1 Fast" }, "desc": { "ko": "저지연 응답", "en": "Low-latency responses", "ja": "低レイテンシ応答" }, "model": "grok-4.1-fast", "cot": false, "context": "2M" }
+      ]
+    },
+    "moonshot": {
+      "name": "MoonshotAI",
+      "shortName": "KIMI",
+      "color": "#6366f1",
+      "baseUrl": "https://api.moonshot.ai",
+      "models": [
+        { "id": "kimi-k2.5", "name": "KIMI K2.5", "tier": "flagship", "context": 262144, "output": 65535, "cot": true, "recommended": true },
+        { "id": "kimi-k2.5-thinking", "name": "KIMI K2.5 Thinking", "tier": "flagship", "context": 262144, "output": 65535, "cot": true },
+        { "id": "kimi-k2", "name": "KIMI K2", "tier": "fast", "context": 256000, "output": 32000, "cot": true },
+        { "id": "kimi-k2-thinking", "name": "KIMI K2 Thinking", "tier": "fast", "context": 256000, "output": 32000, "cot": true }
+      ],
+      "presets": [
+        { "id": "moonshot-custom", "custom": true, "name": { "ko": "KIMI 커스텀", "en": "KIMI Custom", "ja": "KIMIカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "kimi-k25", "name": { "ko": "KIMI K2.5", "en": "KIMI K2.5", "ja": "KIMI K2.5" }, "desc": { "ko": "멀티모달 + 에이전트 스웜", "en": "Multimodal + agent swarm", "ja": "マルチモーダル + エージェントスウォーム" }, "model": "kimi-k2.5", "cot": true, "context": "256K", "config": { "thinking_budget": "16384" } },
+        { "id": "kimi-k25-thinking", "name": { "ko": "KIMI K2.5 Thinking", "en": "KIMI K2.5 Thinking", "ja": "KIMI K2.5 Thinking" }, "desc": { "ko": "강화된 추론 모드", "en": "Enhanced reasoning mode", "ja": "強化推論モード" }, "model": "kimi-k2.5-thinking", "cot": true, "context": "256K", "config": { "thinking_budget": "32000" } }
+      ]
+    },
+    "minimax": {
+      "name": "MiniMax",
+      "shortName": "MiniMax",
+      "color": "#ff6b35",
+      "baseUrl": "https://api.minimax.io",
+      "models": [
+        { "id": "minimax-m2.7", "name": "MiniMax M2.7", "tier": "flagship", "context": 205000, "output": 32000, "cot": true, "recommended": true },
+        { "id": "minimax-m2.5", "name": "MiniMax M2.5", "tier": "fast", "context": 200000, "output": 16000, "cot": true, "recommended": true },
+        { "id": "minimax-m2.1", "name": "MiniMax M2.1", "tier": "fast", "context": 200000, "output": 16000, "cot": true }
+      ],
+      "presets": [
+        { "id": "minimax-custom", "custom": true, "name": { "ko": "MiniMax 커스텀", "en": "MiniMax Custom", "ja": "MiniMaxカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "minimax-m27", "name": { "ko": "MiniMax M2.7", "en": "MiniMax M2.7", "ja": "MiniMax M2.7" }, "desc": { "ko": "자기 진화 에이전트 모델", "en": "Self-evolving agentic model", "ja": "自己進化エージェントモデル" }, "model": "minimax-m2.7", "cot": true, "context": "205K", "config": { "thinking_budget": "16384" } },
+        { "id": "minimax-m25", "name": { "ko": "MiniMax M2.5", "en": "MiniMax M2.5", "ja": "MiniMax M2.5" }, "desc": { "ko": "100 tok/s 고속 추론", "en": "100 tok/s high-speed inference", "ja": "100 tok/s高速推論" }, "model": "minimax-m2.5", "cot": true, "context": "200K", "config": { "thinking_budget": "8192", "thinking_style": "minimal" } }
+      ]
+    },
+    "zhipu": {
+      "name": "ZhipuAI",
+      "shortName": "GLM",
+      "color": "#1e40af",
+      "baseUrl": "https://open.bigmodel.cn/api/paas",
+      "models": [
+        { "id": "glm-5.1", "name": "GLM-5.1", "tier": "flagship", "context": 200000, "output": 128000, "cot": true, "recommended": true },
+        { "id": "glm-5", "name": "GLM-5", "tier": "flagship", "context": 200000, "output": 128000, "cot": true },
+        { "id": "glm-5-fast", "name": "GLM-5 Fast", "tier": "fast", "context": 200000, "output": 32000, "cot": true, "recommended": true },
+        { "id": "glm-4.6", "name": "GLM-4.6", "tier": "fast", "context": 200000, "output": 16000, "cot": true },
+        { "id": "glm-4.5", "name": "GLM-4.5", "tier": "legacy", "context": 131000, "output": 16000, "cot": false }
+      ],
+      "presets": [
+        { "id": "zhipu-custom", "custom": true, "name": { "ko": "GLM 커스텀", "en": "GLM Custom", "ja": "GLMカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "glm-51", "name": { "ko": "GLM-5.1", "en": "GLM-5.1", "ja": "GLM-5.1" }, "desc": { "ko": "744B 파라미터, 오픈소스", "en": "744B params, open-source", "ja": "744Bパラメータ、オープンソース" }, "model": "glm-5.1", "cot": true, "context": "200K", "config": { "thinking_budget": "16384" } },
+        { "id": "glm-47", "name": { "ko": "GLM-4.7", "en": "GLM-4.7", "ja": "GLM-4.7" }, "desc": { "ko": "코딩 + 에이전트 특화", "en": "Coding + agent specialist", "ja": "コーディング + エージェント特化" }, "model": "glm-4.7", "cot": true, "context": "128K", "config": { "thinking_budget": "8192", "thinking_style": "minimal" } },
+        { "id": "glm-47-flash", "name": { "ko": "GLM-4.7 Flash", "en": "GLM-4.7 Flash", "ja": "GLM-4.7 Flash" }, "desc": { "ko": "무료, 초고속", "en": "Free, ultra-fast", "ja": "無料、超高速" }, "model": "glm-4.7-flash", "cot": false, "context": "128K" }
+      ]
+    },
+    "fireworks": {
+      "name": "Fireworks",
+      "shortName": "Fireworks",
+      "color": "#e07850",
+      "baseUrl": "https://api.fireworks.ai/inference",
+      "modelsApi": "/v1/models",
+      "models": [
+        { "id": "accounts/fireworks/routers/kimi-k2p5-turbo", "name": "KIMI K2.5 Turbo", "tier": "firepass", "context": 128000, "output": 32000, "cot": true, "recommended": true },
+        { "id": "accounts/fireworks/routers/glm-5-fast", "name": "GLM-5 Fast", "tier": "firepass", "context": 200000, "output": 32000, "cot": true, "recommended": true },
+        { "id": "accounts/fireworks/routers/deepseek-r1", "name": "DeepSeek R1", "tier": "router", "context": 128000, "output": 32000, "cot": true, "recommended": true },
+        { "id": "accounts/fireworks/routers/deepseek-v3", "name": "DeepSeek V3.2", "tier": "router", "context": 164000, "output": 32000, "cot": true },
+        { "id": "accounts/fireworks/routers/qwen3-235b", "name": "Qwen3 235B", "tier": "router", "context": 128000, "output": 32000, "cot": true },
+        { "id": "accounts/fireworks/models/glm-5.1", "name": "GLM-5.1", "tier": "flagship", "context": 200000, "output": 128000, "cot": true },
+        { "id": "accounts/fireworks/models/kimi-k2.5", "name": "KIMI K2.5", "tier": "flagship", "context": 262144, "output": 65535, "cot": true },
+        { "id": "accounts/fireworks/models/llama-v3p3-70b-instruct", "name": "Llama 3.3 70B", "tier": "fast", "context": 128000, "output": 16000, "cot": false },
+        { "id": "accounts/fireworks/models/qwen3-coder-480b", "name": "Qwen3 Coder 480B", "tier": "flagship", "context": 262000, "output": 32000, "cot": false },
+        { "id": "accounts/fireworks/models/qwen3-30b", "name": "Qwen3 30B", "tier": "fast", "context": 128000, "output": 16000, "cot": true }
+      ],
+      "presets": [
+        { "id": "fireworks-custom", "custom": true, "name": { "ko": "Fireworks 커스텀", "en": "Fireworks Custom", "ja": "Fireworksカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "fw-kimi", "name": { "ko": "KIMI K2.5 Turbo", "en": "KIMI K2.5 Turbo", "ja": "KIMI K2.5 Turbo" }, "desc": { "ko": "고성능 라우터 + CoT", "en": "High-perf router + CoT", "ja": "高性能ルーター + CoT" }, "model": "accounts/fireworks/routers/kimi-k2p5-turbo", "cot": true, "context": "128K", "api_format": "anthropic", "config": { "thinking_budget": "16384" } },
+        { "id": "fw-deepseek-r1", "name": { "ko": "DeepSeek R1", "en": "DeepSeek R1", "ja": "DeepSeek R1" }, "desc": { "ko": "추론 특화, Raw 사고 출력", "en": "Reasoning specialist, raw thoughts", "ja": "推論特化、生の思考出力" }, "model": "accounts/fireworks/routers/deepseek-r1", "cot": true, "context": "128K", "api_format": "openai", "config": { "thinking_display": "true", "thinking_style": "raw" } },
+        { "id": "fw-glm5-fast", "name": { "ko": "GLM-5 Fast", "en": "GLM-5 Fast", "ja": "GLM-5 Fast" }, "desc": { "ko": "고속 GLM 라우터", "en": "Fast GLM router", "ja": "高速GLMルーター" }, "model": "accounts/fireworks/routers/glm-5-fast", "cot": true, "context": "200K", "config": { "thinking_budget": "16384" } },
+        { "id": "fw-llama405b", "name": { "ko": "Llama 3.1 405B", "en": "Llama 3.1 405B", "ja": "Llama 3.1 405B" }, "desc": { "ko": "최대 오픈소스 모델", "en": "Largest open-source model", "ja": "最大オープンソースモデル" }, "model": "accounts/fireworks/models/llama-v3p1-405b-instruct", "cot": false, "context": "128K" }
+      ]
+    },
+    "openrouter": {
+      "name": "OpenRouter",
+      "shortName": "OpenRouter",
+      "color": "#6366f1",
+      "baseUrl": "https://openrouter.ai/api",
+      "modelsApi": "/v1/models",
+      "models": [
+        { "id": "anthropic/claude-opus-4.6", "name": "Claude Opus 4.6", "tier": "flagship", "context": 1000000, "output": 128000, "cot": true, "recommended": true },
+        { "id": "anthropic/claude-sonnet-4.6", "name": "Claude Sonnet 4.6", "tier": "fast", "context": 1000000, "output": 64000, "cot": true, "recommended": true },
+        { "id": "openai/gpt-5.4", "name": "GPT-5.4", "tier": "flagship", "context": 1000000, "output": 32768, "cot": true },
+        { "id": "google/gemini-3.1-pro", "name": "Gemini 3.1 Pro", "tier": "flagship", "context": 2000000, "output": 65536, "cot": true },
+        { "id": "x-ai/grok-4.20", "name": "Grok 4.20", "tier": "flagship", "context": 2000000, "output": 32000, "cot": true },
+        { "id": "deepseek/deepseek-v3.2", "name": "DeepSeek V3.2", "tier": "fast", "context": 164000, "output": 32000, "cot": true },
+        { "id": "deepseek/deepseek-r1", "name": "DeepSeek R1", "tier": "flagship", "context": 128000, "output": 32000, "cot": true },
+        { "id": "google/gemma-4-31b-it", "name": "Gemma 4 31B", "tier": "fast", "context": 256000, "output": 8192, "cot": true },
+        { "id": "qwen/qwen3-coder-480b", "name": "Qwen3 Coder 480B", "tier": "flagship", "context": 262000, "output": 32000, "cot": false, "recommended": true },
+        { "id": "openrouter/free", "name": "Free Router", "tier": "efficient", "context": 128000, "output": 8000, "cot": false }
+      ],
+      "presets": [
+        { "id": "openrouter-custom", "custom": true, "name": { "ko": "OpenRouter 커스텀", "en": "OpenRouter Custom", "ja": "OpenRouterカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "or-claude", "name": { "ko": "Claude Opus", "en": "Claude Opus", "ja": "Claude Opus" }, "desc": { "ko": "통합 API로 Claude 접근", "en": "Access Claude via unified API", "ja": "統合APIでClaude接続" }, "model": "anthropic/claude-opus-4.6", "cot": true, "context": "1M", "config": { "thinking_budget": "32000" } },
+        { "id": "or-gemma4", "name": { "ko": "Gemma 4 31B", "en": "Gemma 4 31B", "ja": "Gemma 4 31B" }, "desc": { "ko": "세계 3위 오픈 모델", "en": "#3 open model worldwide", "ja": "世界3位オープンモデル" }, "model": "google/gemma-4-31b-it", "cot": true, "context": "256K", "config": { "thinking_budget": "8192" } },
+        { "id": "or-free", "name": { "ko": "Free Router", "en": "Free Router", "ja": "Free Router" }, "desc": { "ko": "무료 모델 자동 선택", "en": "Auto-select free models", "ja": "無料モデル自動選択" }, "model": "openrouter/free", "cot": false, "context": "128K" }
+      ]
+    },
+    "vercel": {
+      "name": "Vercel AI",
+      "shortName": "Vercel",
+      "color": "#fafafa",
+      "baseUrl": "https://api.vercel.ai",
+      "models": [
+        { "id": "anthropic/claude-opus-4.6", "name": "Claude Opus 4.6", "tier": "flagship", "context": 1000000, "output": 128000, "cot": true, "recommended": true },
+        { "id": "anthropic/claude-sonnet-4.6", "name": "Claude Sonnet 4.6", "tier": "fast", "context": 1000000, "output": 64000, "cot": true, "recommended": true },
+        { "id": "openai/gpt-5.4", "name": "GPT-5.4", "tier": "flagship", "context": 1000000, "output": 128000, "cot": true },
+        { "id": "google/gemini-3.1-pro", "name": "Gemini 3.1 Pro", "tier": "flagship", "context": 2000000, "output": 65536, "cot": true },
+        { "id": "xai/grok-4.20", "name": "Grok 4.20", "tier": "flagship", "context": 2000000, "output": 32000, "cot": true }
+      ],
+      "presets": [
+        { "id": "vercel-custom", "custom": true, "name": { "ko": "Vercel 커스텀", "en": "Vercel Custom", "ja": "Vercelカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "vercel-grok", "name": { "ko": "Grok 4.20", "en": "Grok 4.20", "ja": "Grok 4.20" }, "desc": { "ko": "Vercel로 Grok 접근", "en": "Access Grok via Vercel", "ja": "VercelでGrokアクセス" }, "model": "xai/grok-4.20", "cot": true, "context": "2M", "config": { "thinking_budget": "32000" } },
+        { "id": "vercel-claude", "name": { "ko": "Claude Sonnet", "en": "Claude Sonnet", "ja": "Claude Sonnet" }, "desc": { "ko": "마크업 없이 Claude 사용", "en": "Use Claude with no markup", "ja": "マークアップなしでClaude" }, "model": "anthropic/claude-sonnet-4.6", "cot": true, "context": "1M", "api_format": "anthropic", "config": { "thinking_budget": "16384" } }
+      ]
+    },
+    "vertex": {
+      "name": "Vertex AI",
+      "shortName": "Vertex",
+      "color": "#4285f4",
+      "baseUrl": "https://us-central1-aiplatform.googleapis.com",
+      "models": [
+        { "id": "gemini-3.1-pro", "name": "Gemini 3.1 Pro", "tier": "flagship", "context": 2000000, "output": 65536, "cot": true, "recommended": true },
+        { "id": "gemini-3-flash", "name": "Gemini 3 Flash", "tier": "fast", "context": 1000000, "output": 65536, "cot": true, "recommended": true },
+        { "id": "gemini-2.5-pro", "name": "Gemini 2.5 Pro", "tier": "flagship", "context": 1000000, "output": 65536, "cot": true },
+        { "id": "claude-opus-4-6@latest", "name": "Claude Opus 4.6", "tier": "flagship", "context": 1000000, "output": 128000, "cot": true },
+        { "id": "claude-sonnet-4-6@latest", "name": "Claude Sonnet 4.6", "tier": "fast", "context": 1000000, "output": 64000, "cot": true }
+      ],
+      "presets": [
+        { "id": "vertex-custom", "custom": true, "name": { "ko": "Vertex 커스텀", "en": "Vertex Custom", "ja": "Vertexカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-", "api_format": "gemini" },
+        { "id": "vertex-gemini", "name": { "ko": "Gemini 3.1 Pro", "en": "Gemini 3.1 Pro", "ja": "Gemini 3.1 Pro" }, "desc": { "ko": "엔터프라이즈 Gemini", "en": "Enterprise Gemini", "ja": "エンタープライズGemini" }, "model": "gemini-3.1-pro", "cot": true, "context": "2M", "api_format": "gemini", "config": { "thinking_budget": "16384" } },
+        { "id": "vertex-claude", "name": { "ko": "Claude Sonnet", "en": "Claude Sonnet", "ja": "Claude Sonnet" }, "desc": { "ko": "GCP에서 Claude 사용", "en": "Claude on GCP", "ja": "GCPでClaude使用" }, "model": "claude-sonnet-4-6@latest", "cot": true, "context": "1M", "api_format": "anthropic", "config": { "thinking_budget": "16384" } }
+      ]
+    },
+    "ollama": {
+      "name": "Ollama Cloud",
+      "shortName": "Ollama",
+      "color": "#ffffff",
+      "baseUrl": "https://ollama.com",
+      "modelsApi": "/api/tags",
+      "models": [
+        { "id": "glm-5.1", "name": "GLM-5.1", "tier": "flagship", "context": 200000, "output": 131072, "cot": true, "recommended": true },
+        { "id": "minimax-m2.7", "name": "MiniMax M2.7", "tier": "flagship", "context": 205000, "output": 32000, "cot": true, "recommended": true },
+        { "id": "gemma4:31b", "name": "Gemma 4 31B", "tier": "flagship", "context": 256000, "output": 8192, "cot": true, "recommended": true },
+        { "id": "gemma4:26b", "name": "Gemma 4 26B-A4B", "tier": "fast", "context": 256000, "output": 8192, "cot": true },
+        { "id": "qwen3.5:122b", "name": "Qwen3.5 122B", "tier": "flagship", "context": 128000, "output": 16000, "cot": true },
+        { "id": "qwen3.5:35b", "name": "Qwen3.5 35B", "tier": "fast", "context": 128000, "output": 16000, "cot": true },
+        { "id": "qwen3-coder-next", "name": "Qwen3 Coder Next", "tier": "fast", "context": 128000, "output": 16000, "cot": false },
+        { "id": "kimi-k2.5", "name": "KIMI K2.5", "tier": "flagship", "context": 262144, "output": 65535, "cot": true },
+        { "id": "deepseek-v3.2", "name": "DeepSeek V3.2", "tier": "fast", "context": 164000, "output": 32000, "cot": true },
+        { "id": "minimax-m2.5", "name": "MiniMax M2.5", "tier": "fast", "context": 200000, "output": 16000, "cot": true },
+        { "id": "glm-5", "name": "GLM-5", "tier": "flagship", "context": 200000, "output": 128000, "cot": true },
+        { "id": "glm-4.7", "name": "GLM-4.7", "tier": "fast", "context": 128000, "output": 16000, "cot": true },
+        { "id": "ministral-3:14b", "name": "Ministral 3 14B", "tier": "fast", "context": 128000, "output": 8000, "cot": false },
+        { "id": "devstral-2:123b", "name": "Devstral 2 123B", "tier": "flagship", "context": 128000, "output": 16000, "cot": false },
+        { "id": "devstral-small-2:24b", "name": "Devstral Small 2 24B", "tier": "fast", "context": 128000, "output": 8000, "cot": false },
+        { "id": "nemotron-3-super:120b", "name": "Nemotron 3 Super 120B", "tier": "flagship", "context": 128000, "output": 16000, "cot": true },
+        { "id": "nemotron-3-nano:30b", "name": "Nemotron 3 Nano 30B", "tier": "fast", "context": 128000, "output": 8000, "cot": true },
+        { "id": "cogito-2.1:671b", "name": "Cogito 2.1 671B", "tier": "flagship", "context": 128000, "output": 32000, "cot": false }
+      ],
+      "presets": [
+        { "id": "ollama-custom", "custom": true, "name": { "ko": "Ollama 커스텀", "en": "Ollama Custom", "ja": "Ollamaカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "ollama-glm51", "name": { "ko": "GLM-5.1 (Cloud)", "en": "GLM-5.1 (Cloud)", "ja": "GLM-5.1 (Cloud)" }, "desc": { "ko": "클라우드 호스팅 GLM", "en": "Cloud-hosted GLM", "ja": "クラウドホスティングGLM" }, "model": "glm-5.1", "cot": true, "context": "200K", "config": { "thinking_budget": "16384" } },
+        { "id": "ollama-minimax27", "name": { "ko": "MiniMax M2.7 (Cloud)", "en": "MiniMax M2.7 (Cloud)", "ja": "MiniMax M2.7 (Cloud)" }, "desc": { "ko": "클라우드 호스팅 MiniMax", "en": "Cloud-hosted MiniMax", "ja": "クラウドホスティングMiniMax" }, "model": "minimax-m2.7", "cot": true, "context": "205K", "config": { "thinking_budget": "16384" } },
+        { "id": "ollama-gemma4", "name": { "ko": "Gemma 4 31B (Cloud)", "en": "Gemma 4 31B (Cloud)", "ja": "Gemma 4 31B (Cloud)" }, "desc": { "ko": "클라우드 호스팅 Gemma", "en": "Cloud-hosted Gemma", "ja": "クラウドホスティングGemma" }, "model": "gemma4:31b", "cot": true, "context": "256K", "config": { "thinking_budget": "8192" } },
+        { "id": "ollama-qwen35", "name": { "ko": "Qwen3.5 122B (Cloud)", "en": "Qwen3.5 122B (Cloud)", "ja": "Qwen3.5 122B (Cloud)" }, "desc": { "ko": "클라우드 호스팅 Qwen", "en": "Cloud-hosted Qwen", "ja": "クラウドホスティングQwen" }, "model": "qwen3.5:122b", "cot": true, "context": "128K", "config": { "thinking_budget": "16384" } },
+        { "id": "ollama-kimi", "name": { "ko": "KIMI K2.5 (Cloud)", "en": "KIMI K2.5 (Cloud)", "ja": "KIMI K2.5 (Cloud)" }, "desc": { "ko": "클라우드 호스팅 KIMI", "en": "Cloud-hosted KIMI", "ja": "クラウドホスティングKIMI" }, "model": "kimi-k2.5", "cot": true, "context": "256K", "config": { "thinking_budget": "16384" } },
+        { "id": "ollama-deepseek", "name": { "ko": "DeepSeek V3.2 (Cloud)", "en": "DeepSeek V3.2 (Cloud)", "ja": "DeepSeek V3.2 (Cloud)" }, "desc": { "ko": "클라우드 호스팅 DeepSeek", "en": "Cloud-hosted DeepSeek", "ja": "クラウドホスティングDeepSeek" }, "model": "deepseek-v3.2", "cot": true, "context": "164K", "config": { "thinking_budget": "16384" } },
+        { "id": "ollama-devstral", "name": { "ko": "Devstral 2 123B (Cloud)", "en": "Devstral 2 123B (Cloud)", "ja": "Devstral 2 123B (Cloud)" }, "desc": { "ko": "소프트웨어 엔지니어링 특화", "en": "Software engineering specialist", "ja": "ソフトウェアエンジニアリング特化" }, "model": "devstral-2:123b", "cot": false, "context": "128K" }
+      ]
+    },
+    "nanogpt": {
+      "name": "NanoGPT",
+      "shortName": "NanoGPT",
+      "color": "#10b981",
+      "baseUrl": "https://api.nano-gpt.com",
+      "modelsApi": "/v1/models",
+      "models": [
+        { "id": "TEE/glm-5-1", "name": "GLM-5.1 TEE", "tier": "flagship", "context": 200000, "output": 131072, "cot": true, "recommended": true },
+        { "id": "TEE/glm-5-1-thinking", "name": "GLM-5.1 Thinking TEE", "tier": "flagship", "context": 200000, "output": 131072, "cot": true },
+        { "id": "x-ai/grok-4.20", "name": "Grok 4.20", "tier": "flagship", "context": 2000000, "output": 131072, "cot": true, "recommended": true },
+        { "id": "TEE/gemma4-31b", "name": "Gemma 4 31B TEE", "tier": "fast", "context": 262144, "output": 131072, "cot": true },
+        { "id": "google/gemma-4-26b-a4b-it", "name": "Gemma 4 26B-A4B", "tier": "efficient", "context": 262144, "output": 131072, "cot": true },
+        { "id": "qwen-3.6-plus", "name": "Qwen 3.6 Plus", "tier": "flagship", "context": 991808, "output": 65536, "cot": true },
+        { "id": "z-ai/glm-5v-turbo:thinking", "name": "GLM-5V Turbo Thinking", "tier": "flagship", "context": 202800, "output": 131100, "cot": true },
+        { "id": "Qwen3.5-27B-BlueStar-Derestricted", "name": "Qwen3.5 27B BlueStar", "tier": "fast", "context": 262144, "output": 32000, "cot": false },
+        { "id": "anthropic/claude-opus-4.6", "name": "Claude Opus 4.6", "tier": "flagship", "context": 1000000, "output": 128000, "cot": true },
+        { "id": "anthropic/claude-sonnet-4.6", "name": "Claude Sonnet 4.6", "tier": "fast", "context": 1000000, "output": 64000, "cot": true },
+        { "id": "openai/gpt-5.4", "name": "GPT-5.4", "tier": "flagship", "context": 1000000, "output": 128000, "cot": true },
+        { "id": "openai/o4-mini", "name": "o4-mini", "tier": "fast", "context": 200000, "output": 100000, "cot": true },
+        { "id": "google/gemini-3.1-pro", "name": "Gemini 3.1 Pro", "tier": "flagship", "context": 2000000, "output": 65536, "cot": true },
+        { "id": "deepseek/deepseek-v3.2", "name": "DeepSeek V3.2", "tier": "fast", "context": 164000, "output": 32000, "cot": true },
+        { "id": "deepseek/deepseek-r1", "name": "DeepSeek R1", "tier": "flagship", "context": 128000, "output": 32000, "cot": true }
+      ],
+      "presets": [
+        { "id": "nanogpt-custom", "custom": true, "name": { "ko": "NanoGPT 커스텀", "en": "NanoGPT Custom", "ja": "NanoGPTカスタム" }, "desc": { "ko": "직접 모델 ID 입력", "en": "Enter custom model ID", "ja": "カスタムモデルID入力" }, "model": "", "cot": false, "context": "-" },
+        { "id": "nanogpt-glm51", "name": { "ko": "GLM-5.1 TEE", "en": "GLM-5.1 TEE", "ja": "GLM-5.1 TEE" }, "desc": { "ko": "신뢰 실행 환경 GLM", "en": "Trusted execution environment GLM", "ja": "信頼実行環境GLM" }, "model": "TEE/glm-5-1", "cot": true, "context": "200K", "config": { "thinking_budget": "16384" } },
+        { "id": "nanogpt-grok", "name": { "ko": "Grok 4.20", "en": "Grok 4.20", "ja": "Grok 4.20" }, "desc": { "ko": "종량제 Grok 접근", "en": "Pay-per-use Grok", "ja": "従量制Grokアクセス" }, "model": "x-ai/grok-4.20", "cot": true, "context": "2M", "config": { "thinking_budget": "32000" } },
+        { "id": "nanogpt-qwen36", "name": { "ko": "Qwen 3.6 Plus", "en": "Qwen 3.6 Plus", "ja": "Qwen 3.6 Plus" }, "desc": { "ko": "991K 컨텍스트", "en": "991K context", "ja": "991Kコンテキスト" }, "model": "qwen-3.6-plus", "cot": true, "context": "991K", "config": { "thinking_budget": "16384" } },
+        { "id": "nanogpt-claude", "name": { "ko": "Claude Opus 4.6", "en": "Claude Opus 4.6", "ja": "Claude Opus 4.6" }, "desc": { "ko": "종량제 Claude 접근", "en": "Pay-per-use Claude", "ja": "従量制Claudeアクセス" }, "model": "anthropic/claude-opus-4.6", "cot": true, "context": "1M", "api_format": "anthropic", "config": { "thinking_budget": "16384" } },
+        { "id": "nanogpt-deepseek", "name": { "ko": "DeepSeek V3.2", "en": "DeepSeek V3.2", "ja": "DeepSeek V3.2" }, "desc": { "ko": "저렴한 종량제", "en": "Affordable pay-per-use", "ja": "手頃な従量制" }, "model": "deepseek/deepseek-v3.2", "cot": true, "context": "164K", "config": { "thinking_budget": "16384" } },
+        { "id": "nanogpt-gemma4", "name": { "ko": "Gemma 4 31B TEE", "en": "Gemma 4 31B TEE", "ja": "Gemma 4 31B TEE" }, "desc": { "ko": "신뢰 실행 환경 Gemma", "en": "Trusted execution environment Gemma", "ja": "信頼実行環境Gemma" }, "model": "TEE/gemma4-31b", "cot": true, "context": "262K", "config": { "thinking_budget": "8192" } },
+        { "id": "nanogpt-qwen35", "name": { "ko": "Qwen3.5 27B BlueStar", "en": "Qwen3.5 27B BlueStar", "ja": "Qwen3.5 27B BlueStar" }, "desc": { "ko": "제한 해제 버전", "en": "Derestricted version", "ja": "制限解除バージョン" }, "model": "Qwen3.5-27B-BlueStar-Derestricted", "cot": false, "context": "262K" }
+      ]
+    }
+  }
+}
