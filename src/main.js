@@ -703,7 +703,7 @@
 
             let temperature = null;
             if (typeof args.temperature === "number" && args.temperature > 0) {
-              temperature = Math.min(2, Math.max(0, args.temperature / 100));
+              temperature = Math.min(2, Math.max(0, args.temperature));
             }
 
             const userMax =
@@ -735,7 +735,7 @@
             // OpenAI format — pass messages through
             let temperature = null;
             if (typeof args.temperature === "number" && args.temperature > 0) {
-              temperature = Math.min(2, Math.max(0, args.temperature / 100));
+              temperature = Math.min(2, Math.max(0, args.temperature));
             }
 
             const userMax =
@@ -765,7 +765,7 @@
 
             let temperature = null;
             if (typeof args.temperature === "number" && args.temperature > 0) {
-              temperature = Math.min(1, Math.max(0, args.temperature / 100));
+              temperature = Math.min(1, Math.max(0, args.temperature));
             }
 
             body = buildRequestBody(args, system, messages, temperature);

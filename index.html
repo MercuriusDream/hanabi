@@ -105,6 +105,10 @@
             <div class="toolbar" role="toolbar" aria-label="Provider management">
                 <input type="checkbox" id="master-check" onchange="toggleMasterCheck(this.checked)" aria-label="Select all" />
                 <button class="btn-accent" onclick="addProvider()" id="btn-add"></button>
+                <div class="preset-dropdown-wrap">
+                    <button class="btn-template" onclick="togglePresetDropdown()" id="btn-preset"></button>
+                    <div class="preset-dropdown" id="preset-dropdown"></div>
+                </div>
                 <button class="btn-icon btn-danger-action" onclick="clearAll()" id="btn-clear" title="Clear all"></button>
                 <div class="selection-bar" id="selection-bar">
                     <span class="selection-count" id="selection-count"></span>
@@ -130,7 +134,10 @@
             </div>
             <div class="json-wrap">
                 <div class="json-toolbar">
-                    <button class="btn-json-action" onclick="importJSON()" id="btn-import" title="Import"></button>
+                    <button class="btn-json-action" onclick="importJSON()" id="btn-import" title="Import JSON"></button>
+                    <button class="btn-json-action" onclick="importShareCode()" id="btn-import-share" title="Import Share Code"></button>
+                    <span class="toolbar-sep"></span>
+                    <button class="btn-json-action" onclick="generateShareCode()" id="btn-share" title="Share"></button>
                     <button class="btn-json-action" onclick="copyToClipboard()" id="btn-copy" title="Copy"></button>
                     <button class="btn-json-action" onclick="downloadJSON()" id="btn-download" title="Download"></button>
                 </div>
