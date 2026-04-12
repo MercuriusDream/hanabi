@@ -383,70 +383,85 @@ const i18n = {
 };
 
 // ============================================================================
-// MODEL CATALOG - Unified data from single source (Updated April 2026)
+// MODEL CATALOG - Comprehensive provider/model database (Updated April 2026)
+// ============================================================================
+// ============================================================================
+// DATA - Loaded from JSON files
 // ============================================================================
 let MODEL_CATALOG = {};
 let PRESET_CATEGORIES = {};
 let PRESETS = [];
 
 // Fallback inline data (used if JSON fetch fails)
-const FALLBACK_DATA = {
-  providers: {
-    anthropic: {
-      name: "Anthropic",
-      shortName: "Claude",
-      color: "#d4a27a",
-      baseUrl: "https://api.anthropic.com",
-      modelsApi: "/v1/models",
-      models: [
-        { id: "claude-opus-4-6", name: "Claude Opus 4.6", tier: "flagship", context: 1000000, output: 128000, cot: true, recommended: true },
-        { id: "claude-sonnet-4-6", name: "Claude Sonnet 4.6", tier: "fast", context: 1000000, output: 64000, cot: true, recommended: true },
-        { id: "claude-haiku-4-5", name: "Claude Haiku 4.5", tier: "efficient", context: 200000, output: 8192, cot: false, recommended: true },
-      ],
-      presets: [
-        { id: "anthropic-custom", custom: true, name: { ko: "Anthropic 커스텀", en: "Anthropic Custom", ja: "Anthropicカスタム" }, desc: { ko: "직접 모델 ID 입력", en: "Enter custom model ID", ja: "カスタムモデルID入力" }, model: "", cot: false, context: "-" },
-        { id: "claude-opus-46", name: { ko: "Claude Opus 4.6", en: "Claude Opus 4.6", ja: "Claude Opus 4.6" }, desc: { ko: "최고 성능 + 1M 컨텍스트 + CoT", en: "Best performance + 1M context + CoT", ja: "最高性能 + 1Mコンテキスト + CoT" }, model: "claude-opus-4-6", cot: true, context: "1M", config: { thinking_budget: "32000" } },
-        { id: "claude-sonnet-46", name: { ko: "Claude Sonnet 4.6", en: "Claude Sonnet 4.6", ja: "Claude Sonnet 4.6" }, desc: { ko: "균형 잡힌 성능 + CoT", en: "Balanced performance + CoT", ja: "バランスの取れた性能 + CoT" }, model: "claude-sonnet-4-6", cot: true, context: "1M", config: { thinking_budget: "16384" } },
-        { id: "claude-haiku-45", name: { ko: "Claude Haiku 4.5", en: "Claude Haiku 4.5", ja: "Claude Haiku 4.5" }, desc: { ko: "최저 비용, 초고속", en: "Lowest cost, ultra-fast", ja: "最低コスト、超高速" }, model: "claude-haiku-4-5", cot: false, context: "200K" },
-      ],
-    },
-    openai: {
-      name: "OpenAI",
-      shortName: "OpenAI",
-      color: "#74aa9c",
-      baseUrl: "https://api.openai.com",
-      modelsApi: "/v1/models",
-      models: [
-        { id: "gpt-5.4", name: "GPT-5.4", tier: "flagship", context: 1000000, output: 128000, cot: true, recommended: true },
-        { id: "o4-mini", name: "o4-mini", tier: "fast", context: 200000, output: 100000, cot: true, recommended: true },
-      ],
-      presets: [
-        { id: "openai-custom", custom: true, name: { ko: "OpenAI 커스텀", en: "OpenAI Custom", ja: "OpenAIカスタム" }, desc: { ko: "직접 모델 ID 입력", en: "Enter custom model ID", ja: "カスタムモデルID入力" }, model: "", cot: false, context: "-" },
-        { id: "gpt-54", name: { ko: "GPT-5.4", en: "GPT-5.4", ja: "GPT-5.4" }, desc: { ko: "최신 플래그십, 1M 컨텍스트", en: "Latest flagship, 1M context", ja: "最新フラッグシップ、1Mコンテキスト" }, model: "gpt-5.4", cot: true, context: "1M", config: { thinking_budget: "32000" } },
-        { id: "o4-mini", name: { ko: "o4-mini", en: "o4-mini", ja: "o4-mini" }, desc: { ko: "추론 특화, 100K 출력", en: "Reasoning specialist, 100K output", ja: "推論特化、100K出力" }, model: "o4-mini", cot: true, context: "200K", config: { thinking_budget: "32000" } },
-      ],
-    },
-    gemini: {
-      name: "Google Gemini",
-      shortName: "Gemini",
-      color: "#8b9dc3",
-      baseUrl: "https://generativelanguage.googleapis.com",
-      modelsApi: "/v1beta/models",
-      models: [
-        { id: "gemini-3.1-pro", name: "Gemini 3.1 Pro", tier: "flagship", context: 2000000, output: 65536, cot: true, recommended: true },
-        { id: "gemini-3-flash", name: "Gemini 3 Flash", tier: "fast", context: 1000000, output: 65536, cot: true, recommended: true },
-      ],
-      presets: [
-        { id: "gemini-custom", custom: true, name: { ko: "Gemini 커스텀", en: "Gemini Custom", ja: "Geminiカスタム" }, desc: { ko: "직접 모델 ID 입력", en: "Enter custom model ID", ja: "カスタムモデルID入力" }, model: "", cot: false, context: "-" },
-        { id: "gemini-31-pro", name: { ko: "Gemini 3.1 Pro", en: "Gemini 3.1 Pro", ja: "Gemini 3.1 Pro" }, desc: { ko: "최대 2M 컨텍스트 + CoT", en: "Up to 2M context + CoT", ja: "最大2Mコンテキスト + CoT" }, model: "gemini-3.1-pro", cot: true, context: "2M", config: { thinking_budget: "16384" } },
-        { id: "gemini-3-flash", name: { ko: "Gemini 3 Flash", en: "Gemini 3 Flash", ja: "Gemini 3 Flash" }, desc: { ko: "Pro급 추론 + Flash 속도", en: "Pro-grade reasoning + Flash speed", ja: "Pro級推論 + Flash速度" }, model: "gemini-3-flash", cot: true, context: "1M", config: { thinking_budget: "8192", thinking_style: "minimal" } },
-      ],
-    },
+const FALLBACK_MODEL_CATALOG = {
+  anthropic: {
+    name: "Anthropic",
+    color: "#d4a27a",
+    baseUrl: "https://api.anthropic.com",
+    models: [
+      { id: "claude-opus-4-6", name: "Claude Opus 4.6", tier: "flagship", context: 1000000, output: 128000, cot: true, recommended: true },
+      { id: "claude-sonnet-4-6", name: "Claude Sonnet 4.6", tier: "fast", context: 1000000, output: 64000, cot: true, recommended: true },
+      { id: "claude-haiku-4-5", name: "Claude Haiku 4.5", tier: "efficient", context: 200000, output: 8192, cot: false, recommended: true },
+    ],
+  },
+  openai: {
+    name: "OpenAI",
+    color: "#74aa9c",
+    baseUrl: "https://api.openai.com",
+    models: [
+      { id: "gpt-5.4", name: "GPT-5.4", tier: "flagship", context: 1000000, output: 128000, cot: true, recommended: true },
+      { id: "o4-mini", name: "o4-mini", tier: "fast", context: 200000, output: 100000, cot: true, recommended: true },
+    ],
+  },
+  gemini: {
+    name: "Google Gemini",
+    color: "#8b9dc3",
+    baseUrl: "https://generativelanguage.googleapis.com",
+    models: [
+      { id: "gemini-3.1-pro", name: "Gemini 3.1 Pro", tier: "flagship", context: 2000000, output: 65536, cot: true, recommended: true },
+      { id: "gemini-3-flash", name: "Gemini 3 Flash", tier: "fast", context: 1000000, output: 65536, cot: true, recommended: true },
+    ],
   },
 };
 
+const FALLBACK_PRESET_CATEGORIES = {
+  anthropic: { name: "Claude", color: "#d4a27a" },
+  openai: { name: "OpenAI", color: "#74aa9c" },
+  gemini: { name: "Gemini", color: "#8b9dc3" },
+  xai: { name: "Grok", color: "#e0e0e0" },
+  moonshot: { name: "KIMI", color: "#6366f1" },
+  minimax: { name: "MiniMax", color: "#ff6b35" },
+  zhipu: { name: "GLM", color: "#1e40af" },
+  fireworks: { name: "Fireworks", color: "#e07850" },
+  openrouter: { name: "OpenRouter", color: "#6366f1" },
+  vercel: { name: "Vercel", color: "var(--text)" },
+  vertex: { name: "Vertex", color: "#4285f4" },
+  ollama: { name: "Ollama", color: "#ffffff" },
+  nanogpt: { name: "NanoGPT", color: "#10b981" },
+};
+
+const FALLBACK_PRESETS = [
+  {
+    id: "anthropic-custom",
+    category: "anthropic",
+    name: { ko: "Anthropic 커스텀", en: "Anthropic Custom", ja: "Anthropicカスタム" },
+    desc: { ko: "직접 모델 ID 입력", en: "Enter custom model ID", ja: "カスタムモデルID入力" },
+    model: "",
+    cot: false,
+    context: "-",
+    custom: true,
+    config: {
+      provider_name: "Anthropic Custom",
+      model: "",
+      api_format: "anthropic",
+      base_url: "https://api.anthropic.com",
+      enable_thinking: "false",
+    },
+  },
+];
+
 // Format to provider mapping for smart defaults
-const FORMAT_PROVIDER_MAP = {
+let FORMAT_PROVIDER_MAP = {
   anthropic: "anthropic",
   openai: "openai",
   gemini: "gemini",
@@ -455,118 +470,67 @@ const FORMAT_PROVIDER_MAP = {
 const FORMAT_OPTIONS = ["anthropic", "openai", "gemini"];
 
 // ============================================================================
-// DATA LOADING - Fetch unified data from single JSON file
+// DATA LOADING - Fetch models and presets from JSON files
 // ============================================================================
 async function loadDataFromJSON() {
   try {
-    const response = await fetch("data.json");
-    if (response.ok) {
-      const data = await response.json();
-      const providers = data.providers || FALLBACK_DATA.providers;
+    const res = await fetch("providers.json");
+    if (!res.ok) throw new Error("Failed to load providers.json");
 
-      // Build MODEL_CATALOG from unified structure
-      MODEL_CATALOG = {};
-      PRESET_CATEGORIES = {};
-      PRESETS = [];
+    // Check if we got HTML instead of JSON (SPA dev server fallback)
+    const contentType = res.headers.get("content-type") || "";
+    const text = await res.text();
+    if (text.trim().startsWith("<!DOCTYPE") || text.trim().startsWith("<")) {
+      throw new Error("Server returned HTML instead of JSON");
+    }
 
-      for (const [key, prov] of Object.entries(providers)) {
-        // Build model catalog
-        MODEL_CATALOG[key] = {
-          name: prov.name,
-          color: prov.color,
-          baseUrl: prov.baseUrl,
-          modelsApi: prov.modelsApi,
-          models: prov.models || [],
-        };
+    const data = JSON.parse(text);
 
-        // Build preset categories
-        PRESET_CATEGORIES[key] = {
-          name: prov.shortName || prov.name,
-          color: prov.color,
-        };
+    // Rebuild MODEL_CATALOG from unified structure
+    MODEL_CATALOG = {};
+    PRESET_CATEGORIES = {};
+    PRESETS = [];
 
-        // Build presets with defaults
-        if (prov.presets) {
-          for (const preset of prov.presets) {
-            const defaultConfig = {
-              provider_name: preset.custom ? (prov.shortName || prov.name) + " Custom" : preset.name?.en || preset.name,
-              model: preset.model,
-              api_format: preset.api_format || "openai",
-              base_url: prov.baseUrl,
-              enable_thinking: preset.cot ? "true" : "false",
-              show_thinking_output: preset.cot ? "true" : "false",
-              thinking_style: "default",
-            };
+    for (const [key, provider] of Object.entries(data.providers || {})) {
+      // Build model catalog
+      MODEL_CATALOG[key] = {
+        name: provider.name,
+        color: provider.color,
+        baseUrl: provider.baseUrl,
+        modelsApi: provider.modelsApi,
+        models: provider.models || []
+      };
 
-            PRESETS.push({
-              id: preset.id,
-              category: key,
-              name: preset.name,
-              desc: preset.desc,
-              model: preset.model,
-              cot: preset.cot,
-              context: preset.context,
-              custom: preset.custom || false,
-              config: { ...defaultConfig, ...(preset.config || {}) },
-            });
-          }
+      // Build preset categories
+      PRESET_CATEGORIES[key] = {
+        name: provider.name,
+        color: provider.color
+      };
+
+      // Flatten presets with base_url injected
+      if (provider.presets) {
+        for (const preset of provider.presets) {
+          PRESETS.push({
+            ...preset,
+            config: {
+              ...preset.config,
+              base_url: provider.baseUrl
+            }
+          });
         }
       }
-    } else {
-      console.warn("Failed to load data.json, using fallback");
-      loadFallbackData();
     }
+
+    // Load format provider map if present
+    if (data.formatProviderMap) {
+      FORMAT_PROVIDER_MAP = data.formatProviderMap;
+    }
+
   } catch (err) {
-    console.warn("Error loading data.json, using fallback:", err);
-    loadFallbackData();
-  }
-}
-
-function loadFallbackData() {
-  const providers = FALLBACK_DATA.providers;
-  MODEL_CATALOG = {};
-  PRESET_CATEGORIES = {};
-  PRESETS = [];
-
-  for (const [key, prov] of Object.entries(providers)) {
-    MODEL_CATALOG[key] = {
-      name: prov.name,
-      color: prov.color,
-      baseUrl: prov.baseUrl,
-      modelsApi: prov.modelsApi,
-      models: prov.models || [],
-    };
-
-    PRESET_CATEGORIES[key] = {
-      name: prov.shortName || prov.name,
-      color: prov.color,
-    };
-
-    if (prov.presets) {
-      for (const preset of prov.presets) {
-        const defaultConfig = {
-          provider_name: preset.custom ? (prov.shortName || prov.name) + " Custom" : preset.name?.en || preset.name,
-          model: preset.model,
-          api_format: preset.api_format || "openai",
-          base_url: prov.baseUrl,
-          enable_thinking: preset.cot ? "true" : "false",
-          show_thinking_output: preset.cot ? "true" : "false",
-          thinking_style: "default",
-        };
-
-        PRESETS.push({
-          id: preset.id,
-          category: key,
-          name: preset.name,
-          desc: preset.desc,
-          model: preset.model,
-          cot: preset.cot,
-          context: preset.context,
-          custom: preset.custom || false,
-          config: { ...defaultConfig, ...(preset.config || {}) },
-        });
-      }
-    }
+    console.warn("Error loading providers.json, using fallback:", err);
+    MODEL_CATALOG = FALLBACK_MODEL_CATALOG;
+    PRESET_CATEGORIES = FALLBACK_PRESET_CATEGORIES;
+    PRESETS = FALLBACK_PRESETS;
   }
 }
 
@@ -2155,7 +2119,7 @@ function generateShareCode() {
       return copy;
     });
     const json = JSON.stringify(safeConfigs);
-    const encoded = btoa(encodeURIComponent(json).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
+    const encoded = btoa(Array.from(new TextEncoder().encode(json), byte => String.fromCharCode(byte)).join(''));
     const code = "HNB1:" + encoded; // Version prefix for future compatibility
 
     // Copy to clipboard
@@ -2186,7 +2150,7 @@ function importShareCode(code) {
     }
 
     const encoded = code.slice(5); // Remove "HNB1:" prefix
-    const json = decodeURIComponent(atob(encoded).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+    const json = new TextDecoder().decode(Uint8Array.from(atob(encoded), c => c.charCodeAt(0)));
     const configs = JSON.parse(json);
 
     if (!Array.isArray(configs) || configs.length === 0) {
@@ -2211,8 +2175,8 @@ function shareProvider(idx) {
   const card = document.getElementById("provider-" + idx);
   if (!card) return;
 
-  const cfg = extractConfig(card);
-  if (!cfg) return;
+  const cfg = getProviderData(card);
+  if (!cfg || Object.keys(cfg).length === 0) return;
 
   // Get model info for display
   const modelInfo = findModelInfo(cfg.model);
@@ -2309,7 +2273,7 @@ ${hasKey ? `<div style="grid-column:span 2"><span style="color:#929098">API Key<
 
     // Code output
     const json = JSON.stringify([shareCfg]);
-    const encoded = btoa(encodeURIComponent(json).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
+    const encoded = btoa(Array.from(new TextEncoder().encode(json), byte => String.fromCharCode(byte)).join(''));
     codeInput.value = "HNB1:" + encoded;
 
     // HTML output

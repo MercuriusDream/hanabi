@@ -4,31 +4,38 @@ FireworksAI -> *Fireworks* -> **花火** !!
 
 RisuAI 멀티 프로바이더 라우팅 플러그인 + CoT/Thinking 블록 지원
 
-## v2.1.0 (2026-04-13)
+## 시작하기
 
-### 새 기능
-- **개별 프로바이더 공유**: 각 프로바이더 카드에 공유 버튼 추가
-  - API 키 포함/제외 옵션 (아카라이브 크레딧 공유용)
-  - `HNB1:` 형식 공유 코드 생성
-- **통합 데이터 파일**: `models.json` + `presets.json` → `data.json`으로 통합
-  - 단일 소스로 프로바이더 메타데이터 관리
-  - 외부 JSON 파일 로드 후 폴백
-  - 동적 모델 목록 API 지원 (OpenRouter, Anthropic, OpenAI, Gemini 등)
-- **일일 캐싱**: 프로바이더 모델 API 응답 24시간 localStorage 캐싱
-- **커스텀 프리셋**: 모든 프로바이더에 커스텀 프리셋 추가 (직접 모델 ID 입력용)
+### 1. 플러그인 설치
+[소스코드](https://raw.githubusercontent.com/MercuriusDream/hanabi/refs/heads/main/src/main.js) 다운로드 → 리수 설정 > 플러그인 > 플러그인 추가 → 파일 선택
 
-### 업데이트된 모델
-- **Ollama Cloud**: GLM-5.1, MiniMax M2.7, Gemma 4, Qwen3.5, KIMI K2.5, DeepSeek V3.2, Devstral 2 등
-- **NanoGPT**: GLM-5.1 TEE, Grok 4.20, Qwen 3.6 Plus, Gemma 4 31B TEE 등
+### 2. WebUI에서 설정
+[Hana.bi](https://mercuriusdream.com/hanabi/) 열어서 프로바이더 설정 → 생성된 JSON 복사
 
-### 파일 구조
+### 3. 리수에 적용
+리수에서 Hanabi 플러그인 클릭 → config 필드에 JSON 붙여넣기 → 채팅 봇 탭에서 프로바이더 선택
+
+## 주요 기능
+
+- **멀티 프로바이더** - 하나의 설정으로 여러 프로바이더 등록
+- **CoT/Thinking 블록** - 생각 과정을 채팅에 표시 (Anthropic/OpenAI/Gemini 지원)
+- **프리셋 시스템** - 100+ 모델 프리셋 + 커스텀 모델 지원
+- **드래그 앤 드롭** - 프로바이더 카드 순서 변경
+- **대량 작업** - 여러 프로바이더 한번에 수정
+- **프로바이더 공유** - 공유 코드(HNB1:)로 설정 공유
+
+## 파일 구조
+
 ```
 hanabi/
-├── index.html      # WebUI
-├── style.css       # 스타일 (다크/라이트 테마, 보더 없음)
-├── app.js          # WebUI 로직
-├── data.json       # 통합 프로바이더 데이터 (모델 + 프리셋)
-└── src/main.js     # RisuAI 플러그인
+├── index.html       # WebUI Config Generator
+├── style.css        # 스타일 (다크/라이트 테마)
+├── app.js           # WebUI 로직
+├── providers.json   # 통합 프로바이더 데이터 (모델 + 프리셋 + 메타데이터)
+├── src/
+│   └── main.js      # RisuAI 플러그인
+├── README.md        # 이 파일
+└── CHANGELOG.md     # 업데이트 내역
 ```
 
 ## 라이선스

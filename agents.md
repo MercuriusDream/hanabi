@@ -6,13 +6,14 @@ RisuAI multi-provider routing plugin with CoT/Thinking block support.
 
 ```
 hanabi/
-├── index.html      # WebUI Config Generator
-├── style.css       # WebUI styles (dark/light theme, CSS custom properties)
-├── app.js          # WebUI logic (vanilla JS, no framework)
-├── data.json       # Unified provider data (models + presets in one file)
+├── index.html       # WebUI Config Generator
+├── style.css        # WebUI styles (dark/light theme, CSS custom properties)
+├── app.js           # WebUI logic (vanilla JS, no framework)
+├── providers.json   # Unified provider data (models + presets + metadata)
 ├── src/
-│   └── main.js     # RisuAI plugin (v2.0.0, Plugin API 3.0)
-└── README.md
+│   └── main.js      # RisuAI plugin (v2.0.0, Plugin API 3.0)
+├── README.md        # Overview and quick start
+└── CHANGELOG.md     # Version history
 ```
 
 ## Plugin (src/main.js)
@@ -39,6 +40,29 @@ Vanilla JS config generator. No build step, no dependencies.
 - Model field uses `<input>` with `<datalist>` for presets + free text input
 - Import/copy/download buttons float inside the JSON code block
 
+## providers.json
+
+Unified data file containing all provider information:
+
+```json
+{
+  "providers": {
+    "providerKey": {
+      "name": "Display Name",
+      "color": "#hexcolor",
+      "baseUrl": "https://api.example.com",
+      "modelsApi": "/v1/models",
+      "models": [...],
+      "presets": [...]
+    }
+  },
+  "formatProviderMap": {...},
+  "defaults": {...}
+}
+```
+
+Each provider contains both model definitions and presets, eliminating duplication between separate files.
+
 ## CSS Token System
 
 All colors use CSS custom properties defined in `:root` / `[data-theme="light"]`:
@@ -47,28 +71,6 @@ All colors use CSS custom properties defined in `:root` / `[data-theme="light"]`
 - `--accent` — primary accent (mauve/sakura pink)
 - `--danger`, `--success`, `--info`, `--warn` — semantic colors
 
-## Unified Data (data.json)
-
-Consolidated provider data that replaces the old separate `models.json` and `presets.json` files:
-
-```json
-{
-  "providers": {
-    "providerKey": {
-      "name": "Full Provider Name",
-      "shortName": "Display Name",
-      "color": "#hexcolor",
-      "baseUrl": "https://api.provider.com",
-      "modelsApi": "/v1/models",
-      "models": [...],
-      "presets": [...]
-    }
-  }
-}
-```
-
-Each provider contains both its model catalog AND preset configurations, eliminating duplication and ensuring consistency.
-
 ## Conventions
 
 - All user-facing strings go through `i18n` object and `t()` function
@@ -76,7 +78,6 @@ Each provider contains both its model catalog AND preset configurations, elimina
 - Boolean config values are strings `"true"` / `"false"` (not actual booleans)
 - The plugin checks both string and boolean equality for backwards compatibility: `cfg.enable_thinking !== "false" && cfg.enable_thinking !== false`
 - Animations are minimal — only functional transitions (advanced fields expand, checkbox toggle, toast fade)
-- **No borders/outlines** — UI uses background color changes and subtle shadows for visual hierarchy
 
 ## License
 

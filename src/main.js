@@ -1,6 +1,6 @@
 //@name Hanabi
 //@api 3.0
-//@version 2.0.0
+//@version 2.1.0
 //@display-name Hanabi
 //@link https://docs.fireworks.ai/guides/reasoning
 //@arg config string Provider configurations (JSON array). Each item can have: api_key, base_url, model, provider_name, api_format, enable_thinking, thinking_budget, thinking_display, show_thinking_output, thinking_style, thinking_open, thinking_close, custom_body. Example: [{"api_key":"fw-xxx","model":"accounts/fireworks/routers/glm-5-fast","provider_name":"GLM"},{"api_key":"fw-yyy","model":"accounts/fireworks/routers/kimi-k2p5-turbo","provider_name":"Kimi","api_format":"openai","enable_thinking":"false"}]
